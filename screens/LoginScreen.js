@@ -51,6 +51,11 @@ export default class Homescreen extends Component {
         title="Do Login"
         onPress={this.handleClick}
       />
+
+      <Button
+        title="Go to Register"
+        onPress={this.goToRegister}
+      />
     </View>
     );
   }
@@ -94,5 +99,10 @@ export default class Homescreen extends Component {
   {
     global.password = val;
   }  
+
+  goToRegister = async() =>
+  {
+    this.props.navigate('Register');
+  }
 
 }
