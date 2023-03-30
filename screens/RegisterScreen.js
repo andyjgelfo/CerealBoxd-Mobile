@@ -4,8 +4,8 @@ import { ActivityIndicator, Button, View, Text, TextInput } from 'react-native';
 global.localName = '';
 global.password = '';
 global.userId = -1;
-global.firstName = '';
-global.lastName = '';
+global.fName = '';
+global.lName = '';
 global.search = '';
 global.card = '';
 
@@ -45,7 +45,7 @@ export default class Homescreen extends Component {
       </View>
 
       <View style={{ flexDirection:'row' }}>
-        <Text style={{fontSize:20}}>Last Name: </Text>
+        <Text style={{fontSize:20}}>Username: </Text>
         <TextInput
           style={{height: 30,fontSize:20, backgroundColor:'#ffffff'}}
           placeholder="Username"
@@ -100,7 +100,7 @@ export default class Homescreen extends Component {
   {
     try
     {
-      var obj = {firstName:global.firstName.trim(),lastName:global.password.trim(),userName:global.userName.trim(),password:global.password.trim(),email:global.email.trim()};
+      var obj = {fName:global.fName.trim(),lName:global.lName.trim(),userName:global.userName.trim(),password:global.password.trim(),email:global.email.trim()};
       var js = JSON.stringify(obj);
 
       const response = await fetch('https://cerealboxd.herokuapp.com/api/register',
@@ -116,8 +116,8 @@ export default class Homescreen extends Component {
       {
         global.userName = res.userName;
         global.password = res.password;
-        global.firstName = res.firstName;
-        global.lastName = res.lastName;
+        global.fName = res.fName;
+        global.lName = res.lName;
         global.email = res.email;
         global.userId = res.id;
         this.props.navigation.navigate('Card');
@@ -131,12 +131,12 @@ export default class Homescreen extends Component {
 
   changeFirstNameHandler = async (val) =>
   {
-    global.firstName = val;
+    global.fName = val;
   }  
 
   changeLastNameHandler = async (val) =>
   {
-    global.lastName = val;
+    global.lName = val;
   }  
 
   changeUsernameHandler = async (val) =>
