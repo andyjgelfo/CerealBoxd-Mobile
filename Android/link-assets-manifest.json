@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/SharpGroteskBook20.otf",
+      "sha1": "67526fc5a200710275e855546dcefdc2221570df"
+    },
+    {
+      "path": "assets/fonts/SharpGroteskSemiBold15.otf",
+      "sha1": "87601be1e70ad537d20c63284064a98a8f32e3bb"
+    },
+    {
+      "path": "assets/fonts/SharpGroteskSemiBold20.otf",
+      "sha1": "34e4dca26695a8fe95b56743f33933d0d4349633"
+    }
+  ]
+}

@@ -4,8 +4,10 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 
 import LoginScreen from './screens/LoginScreen';
-import CardScreen from './screens/CardScreen';
+import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen';
+import SearchScreen from './screens/SearchScreen'
 
 export default class App extends React.Component {
   render() {
@@ -17,32 +19,35 @@ const AppNavigator = createStackNavigator({
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   },
-  Card: {
-    screen: CardScreen,
+  Tab: {
+    screen: Tabs,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   },
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
+    }
+  },
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      headerShown: false // Will hide header for HomePage
+    }
+  },
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: {
+      headerShown: false // Will hide header for HomePage
     }
   }
 },{
-  initialRouteName: "Register"
+  initialRouteName: "Login"
 });
 
 const AppContainer = createAppContainer(AppNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
