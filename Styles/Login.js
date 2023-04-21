@@ -1,5 +1,13 @@
 import {StyleSheet} from 'react-native';
 
+import * as Font from 'expo-font';
+let customFonts = 
+{
+	'SemiBold15': require('../assets/Fonts/SharpGroteskSemiBold15.otf'),
+	'Book20' : require('../assets/Fonts/SharpGroteskBook20.otf'),
+	'SemiBold20' : require('../assets/Fonts/SharpGroteskSemiBold20.otf'),
+}
+
 const styles = StyleSheet.create({
 	background: {
 		height: '100%',
@@ -19,10 +27,11 @@ const styles = StyleSheet.create({
 		backgroundColor:'#2C3440',
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		fontFamily: 'Book20'
 	},
 	inputBox: {
-		width: '85%',
+		width: '75%',
 		backgroundColor: '#F2EAC1',
 		alignItems: 'center',
 		borderRadius: 20,

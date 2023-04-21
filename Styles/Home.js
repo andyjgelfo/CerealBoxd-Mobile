@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import Constants from 'expo-constants';
+
 
 const styles = StyleSheet.create({
 	background: {
@@ -18,11 +20,27 @@ const styles = StyleSheet.create({
 	container: {
 		backgroundColor:'#2C3440',
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center'
+		alignContent:'center',
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
-	inputBox: {
+	cerealDayBox: {
 		width: 300,
+		height: 150,
+		backgroundColor: '#F2EAC1',
+		alignItems: 'center',
+		borderRadius: 20,
+		borderColor: '#1C2143',
+		borderWidth: 4,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
+	},
+	topCerealsBox: {
+		width: 300,
+		height: 300,
 		backgroundColor: '#F2EAC1',
 		alignItems: 'center',
 		borderRadius: 20,
@@ -85,7 +103,41 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3
 		}
+	},
+	container2: {
+		flex: 1,
+		justifyContent: 'center',
+		paddingTop: Constants.statusBarHeight,
+		backgroundColor: '#ecf0f1',
+
+	  },
+	  paragraph: {
+		margin: 24,
+		fontSize: 18,
+		fontWeight: 'bold',
+		textAlign: 'center',
+	  },
+	  NavContainer: {
+		position: 'absolute',
+		alignItems: 'center',
+		bottom: 0,
+	  },
+	  NavBar: {
+		flexDirection: 'row',
+		backgroundColor: '#1C2143',
+		width:'100%',
+		justifyContent: 'space-evenly',
+		borderRadius: 30
+	  },
+	  IconBehave:{
+		padding: 20
+	  },
+	  Icon: {
+		width: 90,
+		height: 40,
+		resizeMode: 'contain'
 	}
 })
+
 
 export default styles;

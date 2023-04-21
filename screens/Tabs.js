@@ -29,6 +29,7 @@ export default function Tabs() {
 			})}>
 				<Tab.Screen name="Home" component={HomeScreen} />
 				<Tab.Screen name="Search" component={SearchScreen} />
+				<Tab.Screen name="Verification" component={VerificationScreen} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);

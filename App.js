@@ -8,6 +8,7 @@ import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen'
+import VerificationScreen from './screens/VerificationScreen';
 
 export default class App extends React.Component {
   render() {
@@ -40,6 +41,13 @@ const AppNavigator = createStackNavigator({
       headerShown: false // Will hide header for HomePage
     }
   },
+  Verification: 
+  {
+    screen: VerificationScreen,
+    navigationOptions: {
+      headerShown: false // Will hide header for HomePage
+    }
+  },
   Search: {
     screen: SearchScreen,
     navigationOptions: {
@@ -47,7 +55,7 @@ const AppNavigator = createStackNavigator({
     }
   }
 },{
-  initialRouteName: "Login"
+  initialRouteName: "Verification"
 });
 
 const AppContainer = createAppContainer(AppNavigator);

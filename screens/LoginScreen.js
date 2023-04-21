@@ -11,16 +11,42 @@ global.lastName = '';
 global.search = '';
 global.card = '';
 
+import * as Font from 'expo-font';
+let customFonts = 
+{
+	'SemiBold15': require('../assets/Fonts/SharpGroteskSemiBold15.otf'),
+	'Book20' : require('../assets/Fonts/SharpGroteskBook20.otf'),
+	'SemiBold20' : require('../assets/Fonts/SharpGroteskSemiBold20.otf'),
+}
+
 export default class Login extends Component {
 
 	constructor() {
 		super()
 		this.state = {
-			 message: ' '
+			 message: ' ',
+			 fontsLoaded: false
 		}
+	};
+
+	//Load in custom fonts
+	async _loadFontsAsync() {
+		await Font.loadAsync(customFonts);
+		this.setState({fontsLoaded: true});
+	}
+	
+	componentDidMount()
+	{
+		this._loadFontsAsync();
 	}
 
 	render() {
+
+		//If the fonts didn't load, ret null
+		if(!this.state.fontsLoaded) {
+			return null;
+		}
+
 		return (
 			<SafeAreaView style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
