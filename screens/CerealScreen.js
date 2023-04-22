@@ -82,6 +82,19 @@ export default class CerealScreen extends Component {
 							{/*Image*/}
 							<Image style={styles.cerealBoxImg} source={{uri: cerealImgSrc}} resizeMode={'cover'} />
 
+							{/*Container for media buttons*/}
+							<View style={styles.mediaButtons} {...{justifyContent: 'center'}}>
+								
+								{/*Like*/}
+								<Pressable onPress={this.goToFavorites} style={styles.Media}>
+									<Image style={styles.Like}source={require("../assets/Heart.png")}/>
+								</Pressable>
+								
+								{/*Review*/}
+								<Pressable onPress={this.goToFavorites} style={styles.Media}>
+									<Image style={styles.Comment} source={require("../assets/chat-box.png")}/>
+								</Pressable>
+							</View>
 						</View>
 
 						<Text> &nbsp; </Text>
@@ -240,6 +253,14 @@ export default class CerealScreen extends Component {
 
 	goToFavorites = async() => {
 		this.props.navigation.navigate('Cereal');
+	}
+
+	userLikeCereal = async() => {
+
+	}
+
+	userReviewCereal = async() => {
+		
 	}
 
 

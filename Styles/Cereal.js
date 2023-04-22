@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     },
     cerealBoxImgContainer: {
         width: 170,
-		height: 220,
+		height: 230,
+		marginTop: 117,
 		alignItems: 'center',
 		//borderRadius: 20,
 		//borderColor: '#1C2143',
@@ -41,6 +42,19 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3
 		},
+    },
+	mediaButtons: {
+        width: 155,
+		height: 200,
+		margin: 10,
+		marginLeft: 0,
+		flexDirection: 'row',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
+				borderWidth: 4,
     },
     cerealBoxImg: {
         width: '90%',
@@ -53,6 +67,32 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3
 		},
+    },
+	Like: {
+        width: '200%',
+		height: '100%',
+		alignItems: 'center',
+		borderRadius: 3,
+		marginRight:10,
+        overflow: "hidden",
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
+		resizeMode:'contain'
+    },
+
+	Comment: {
+        width: '200%',
+		height: '100%',
+		alignItems: 'center',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
+		resizeMode:'contain'
     },
     cerealInfoBox: {
         width: 217,
@@ -184,8 +224,15 @@ const styles = StyleSheet.create({
 	  IconBehave:{
 		padding: 20
 	  },
+	  Media:{
+		width:'36%',
+		height:'25%',
+		flexDirection:'column',
+		borderWidth:5,
+		alignContent:'center'
+	  },
 	  Icon: {
-		width: 90,
+		width: 50,
 		height: 40,
 		resizeMode: 'contain'
 	}
