@@ -9,6 +9,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen'
 import VerificationScreen from './screens/VerificationScreen';
+import CerealScreen from './screens/CerealScreen'
 
 export default class App extends React.Component {
   render() {
@@ -53,9 +54,15 @@ const AppNavigator = createStackNavigator({
     navigationOptions: {
       headerShown: false // Will hide header for HomePage
     }
+  },
+  Cereal: {
+    screen: CerealScreen,
+    navigationOptions: {
+      headerShown: false // Will hide header for HomePage
+    }
   }
 },{
-  initialRouteName: "Verification"
+  initialRouteName: "Cereal"
 });
 
 const AppContainer = createAppContainer(AppNavigator);
