@@ -1,8 +1,20 @@
 import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView} from 'react-native';
+import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, Pressable, Icon} from 'react-native';
 import {createStackNavigator, createAppContainer, } from 'react-navigation';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from "../Styles/Home.js";
+
+import * as Font from 'expo-font';
+import Constants from 'expo-constants';
+
+let customFonts = 
+{
+	'SemiBold15': require('../assets/Fonts/SharpGroteskSemiBold15.otf'),
+	'Book20' : require('../assets/Fonts/SharpGroteskBook20.otf'),
+	'SemiBold20' : require('../assets/Fonts/SharpGroteskSemiBold20.otf'),
+}
+
+let topCereals = "";
 
 export default class HomeScreen extends Component {
 
@@ -10,52 +22,123 @@ export default class HomeScreen extends Component {
 		super()
 		this.state = {
 			 searchCriteria: '\n ',
-			 newCard: '\n '
+			 topCerealCriteria: '\n',
+			 newCard: '\n ',
+			 fontsLoaded: false
 		}
 	}
 
+	//Load in custom fonts
+	async _loadFontsAsync() {
+		await Font.loadAsync(customFonts);
+		this.setState({fontsLoaded: true});
+	}
+	
+	componentDidMount()
+	{
+		this._loadFontsAsync();
+	}
+
 	render() {
+
+		this.handleTopCereals();
+
+		//If the fonts didn't load, ret null
+		if(!this.state.fontsLoaded) {
+			return null;
+		}
+
 		return (
-			<SafeAreaView style={styles.container}>
+		<View style={styles.container}>
+			
+			<View style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
-				<View style={styles.inputBox}>
+
+				{/*Witty cereal pun*/ }
+				<Text style={{fontSize:30, color:'white', fontFamily: 'SemiBold20', textAlign: 'center'}}>The Only (Raisin) Brand You Can Trust</Text>
+
+				<Text> &nbsp; </Text>
+				<Text> &nbsp; </Text>
+
+				{/*First Box - Cereal of the Day*/}
+				<View style={styles.inputBox} {...{justifyContent: 'center', width: 200, height: 150}} >
+
+					{/*Cereal of the Day*/}
 					<View style={{flexDirection:'row'}}>
-						<Text style={{fontSize:20}}>Search Criteria: </Text>
-						<TextInput
-							style={styles.textInput}
-							placeholder="Search"
-							onChangeText={(val) => {this.changeSearchHandler(val)}}
-						/>				
-						<Button
-							style={styles.button}
-							title="Search"
-							onPress={this.handleSearchClick}
-						/>
+						<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Cereal of the Day!</Text>			
 					</View>
-					<Text style={{fontSize:20}}>{this.state.searchCriteria} </Text>
+
+					{/*Spacing*/}
+					<Text> &nbsp; </Text>
+					<Text> &nbsp; </Text>
+
+					{/*Cereal Title*/}
+					<View style={{flexDirection:'row'}}>
+						<Text style={{fontSize: 19, textAlign: 'center', fontFamily: 'SemiBold20'}}>Raisin Bran</Text>
+					</View>
+
+				</View>
+
+				<Text>&nbsp;</Text>
+
+				<View style={styles.inputBox} {...{justifyContent: 'center', alignItems: 'center', width: 300, height: 300}}>
+
+				<Text>&nbsp;</Text>
+				<Text>&nbsp;</Text>
+				<Text>&nbsp;</Text>
+				<Text>&nbsp;</Text>
+				<Text>&nbsp;</Text>
+				<Text>&nbsp;</Text>
+
 
 					<View style={{flexDirection:'row'}}>
-						<Text style={{fontSize:20}}>Card to Add: </Text>
-						<TextInput
-							style={styles.textInput}
-							placeholder="Card"
-							onChangeText={(val) => {this.changeCardHandler(val)}}
-						/>
-						<Button
-							style={styles.button}
-							title=" Add "
-							onPress={this.handleCardClick}
-						/>
+						<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Current Top 5 Rated Cereals</Text>
+					</View>
 
+					<View style={{flexDirection:'row'}}>
+
+						<Text style={{fontSize:20, textAlign: 'left', fontFamily:'SemiBold15'}}>
+				
+								{topCereals}
+						</Text>
+						
+
+						<Text style={{fontSize:20, textAlign: 'center', fontFamily:''}}
+
+							
+
+							
+						/>	
 					</View>
 					<Text style={{fontSize:20}}>{this.state.newCard}</Text>
 				</View>
 				<View style={styles.profileBar}>
-					<Image style={styles.logo} source={require("../assets/logo.png")} />
+					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
 					<Text style={{fontSize:100}}> </Text>
 					<View style={styles.profileLogo} />
 				</View>
-			</SafeAreaView>
+			</View>
+
+
+			{/* <View style={styles.NavContainer}>
+				<View style={styles.NavBar}>
+				<Pressable onPress={this.goToHome} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
+					<Image source = {require('../assets/icons8-home-page-48.png')} style={styles.Icon} />
+				</Pressable>
+				<Pressable onPress={this.goToSearch} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
+					<Image source = {require('../assets/icons8-search-64.png')} style={styles.Icon} />
+				</Pressable>
+				<Pressable onPress={this.goToCereals} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
+					<Image source = {require('../assets/icons8-cereal-64.png')} style={styles.Icon} />
+				</Pressable>
+				<Pressable onPress={this.goToFavorites} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
+					<Image source = {require('../assets/icons8-rating-48.png')} style={styles.Icon} />
+				</Pressable>  
+				</View>
+			</View> */}
+
+		</View>
+			
 		)
 	}
 
@@ -120,11 +203,97 @@ export default class HomeScreen extends Component {
 		}
 	}
 
+	handleTopCereals = async () => {
+
+
+		
+		var obj = {
+			"collection": "box",
+			"column": "name",
+			"order": "-1"
+		}
+
+		var js = JSON.stringify(obj);
+
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/sort', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			var res = JSON.parse(await response.text());
+
+			var results = res.results;
+
+			//results = JSON.stringify(results);
+
+			//alert(results);
+
+			var resultText = '\n';
+			for (var i=0; i < 5; i++) 
+			{
+				let nameToAdd = results[i].name;
+				nameToAdd = nameToAdd.toUpperCase();
+				//alert(nameToAdd);
+
+				//alert(results[i]);
+				resultText += (i + 1) + ". " + nameToAdd + "\n\n";
+				
+			
+			}
+			resultText += '\n';
+
+			//console.log(resultText);
+
+			//alert("");
+
+			topCereals = resultText;
+
+			this.setState({topCerealCriteria: ''});
+		}
+		catch(e) {
+			this.setState({topCerealCriteria: e.message});
+		}
+
+		/*var obj = {
+			collection:"",
+			column:"",
+			order:""
+		}
+
+		** collection refers to the database collection you want, like user, box, or reviews
+
+		** column refers to the field: like in user, it would be something like fName or lName.
+
+		** order refers to ascending or descending. 1 is ascending, -1 is descending.
+
+		** returns a json object with a variable inside called results... which is an array. */
+	}
+
 	changeSearchHandler = async (val) => {
 		global.search = val;
 	}
 
 	changeCardHandler = async (val) => {
 		global.card = val;
+	}
+
+	goToHome = async() => {
+		this.props.navigation.navigate('Home');
+	}
+
+	goToSearch = async() => {
+		this.props.navigation.navigate('Search');
+	}
+
+	goToCereal = async() => {
+		this.props.navigation.navigate('Evan');
+	}
+
+	goToFavorites = async() => {
+		this.props.navigation.navigate('Cereal');
 	}
 }

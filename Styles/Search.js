@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 		backgroundColor:'#2C3440',
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'flex-start'
 	},
 	inputBox: {
 		width: 300,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderRadius: 20,
 		borderColor: '#1C2143',
-		borderWidth: 2,
+		borderWidth: 4,
 		shadowOpacity: 0.25,
 		shadowOffset: {
 			width: 0,
@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 	},
 	profileBar: {
 		flexDirection: 'row',
-		position: 'absolute',
 		top: 20,
 		alignItems: 'center'
 	},
@@ -54,6 +53,23 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25
+	},
+	searchBar: {
+		width: '90%',
+		height: 40,
+		fontSize: 30,
+		fontFamily: 'SemiBold15',
+		backgroundColor: '#FFF',
+		alignItems: 'center',
+		textAlign: 'center',
+		borderRadius: 20,
+		borderColor: '#1C2143',
+		borderWidth: 2,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
 	},
 	tabBar: {
 		bottom: 0,

@@ -1,7 +1,8 @@
 import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, SafeAreaView, KeyboardAvoidingView} from 'react-native';
+import {ActivityIndicator, Button, View, Text, TextInput, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import jwt_decode from "jwt-decode";
 import styles from "../Styles/Login.js";
+import * as Font from 'expo-font';
 
 global.localName = '';
 global.password = '';
@@ -10,6 +11,12 @@ global.firstName = '';
 global.lastName = '';
 global.search = '';
 global.card = '';
+
+let customFonts = {
+	'SemiBold15': require('../assets/Fonts/SharpGroteskSemiBold15.otf'),
+	'Book20' : require('../assets/Fonts/SharpGroteskBook20.otf'),
+	'SemiBold20' : require('../assets/Fonts/SharpGroteskSemiBold20.otf'),
+}
 
 export default class Login extends Component {
 
@@ -20,11 +27,25 @@ export default class Login extends Component {
 		}
 	}
 
+	//Load in custom fonts
+	async _loadFontsAsync() {
+		await Font.loadAsync(customFonts);
+		this.setState({fontsLoaded: true});
+	}
+	
+	componentDidMount() {
+		this._loadFontsAsync();
+	}
+
 	render() {
+		if (!this.state.fontsLoaded) {
+			return null;
+		}
+
 		return (
 			<SafeAreaView style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
-				<Image style={styles.logo} source={require("../assets/logo.png")} />
+				<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
 				<KeyboardAvoidingView style={styles.inputBox} behavior="padding" enabled>
 					<Text style={{fontSize:20}}> </Text>
 					<Text style={styles.title}>LOGIN</Text>
@@ -32,7 +53,7 @@ export default class Login extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Username"
+							placeholder="USERNAME"
 							onChangeText={(val) => {this.changeLoginNameHandler(val)}}
 						/>        
 					</View>
@@ -41,7 +62,7 @@ export default class Login extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Password"
+							placeholder="PASSWORD"
 							secureTextEntry={true}
 							onChangeText={(val) => {this.changePasswordHandler(val)}}
 						/>
@@ -50,11 +71,9 @@ export default class Login extends Component {
 					<Text style={{fontSize:15, color:'red',}}>{this.state.message}</Text>
 					<Text style={{fontSize:5}}> </Text>
 					<View style={styles.button}>
-						<Button
-							title="Sign In"
-							color="#fff"
-							onPress={this.handleClick}
-						/>
+						<TouchableOpacity onPress={this.handleClick} style={styles.appButtonContainer}>
+							<Text style={styles.appButtonText}>SIGN IN</Text>
+						</TouchableOpacity>
 					</View>
 					<Text style={{fontSize:5}}> </Text>
 					<Button
@@ -94,7 +113,7 @@ export default class Login extends Component {
 				global.lastName = decoded.lastName;
 				global.userId = decoded.id;
 				this.setState({message: ' '});
-				this.props.navigation.navigate('Home');
+				this.props.navigation.navigate('Tabs');
 			}
 			else if (res.error != undefined) {
 				this.setState({message: res.error});
@@ -121,12 +140,3 @@ export default class Login extends Component {
 	}
 	
 }
-
-
-				// <Image 
-				// 	source={{
-				// 		width: 200,
-				// 		height: 200,
-				// 		uri: "https://picsum.photos/200/200",
-				// 	}}
-				// />

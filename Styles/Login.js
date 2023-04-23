@@ -1,6 +1,24 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+	appButtonContainer: {
+		width: 75,
+		height:35,
+		backgroundColor: '#1C2143',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 20,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
+	},
+	appButtonText: {
+		fontFamily: 'SemiBold15',
+		fontSize: 20,
+		color: '#FFF'
+	},
 	background: {
 		height: '100%',
 		width: '100%',
@@ -36,7 +54,7 @@ const styles = StyleSheet.create({
 	},
 	logo: {
 		width: 300,
-		height: 200,
+		height: 50,
 		position: 'absolute',
 		top: 50,
 		shadowOpacity: 0.25,
@@ -49,6 +67,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		width: 200,
 		fontSize: 20,
+		fontFamily: 'SemiBold15',
 		backgroundColor:'#FFF',
 		borderRadius: 20,
 		borderColor: '#1C2143',
@@ -63,6 +82,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 40,
 		fontWeight: 'bold',
+		fontFamily: 'SemiBold20',
 		color: '#1C2143',
 		shadowOpacity: 0.25,
 		shadowOffset: {

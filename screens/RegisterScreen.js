@@ -1,6 +1,5 @@
 import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, SafeAreaView, KeyboardAvoidingView} from 'react-native';
-import jwt_decode from "jwt-decode";
+import {ActivityIndicator, AppButton, View, Text, TextInput, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import styles from "../Styles/Login.js"
 
 global.localName = '';
@@ -25,7 +24,7 @@ export default class Register extends Component {
 		return (
 			<SafeAreaView style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
-				<Image style={styles.logo} source={require("../assets/logo.png")} />
+				<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
 				<KeyboardAvoidingView style={styles.inputBox} behavior="padding" enabled>
 					<Text style={{fontSize:20}}> </Text>
 					<Text style={styles.title}>REGISTER</Text>
@@ -33,7 +32,7 @@ export default class Register extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="First Name"
+							placeholder="FIRST NAME"
 							onChangeText={(val) => {this.changeFirstNameHandler(val)}}
 						/>        
 					</View>
@@ -42,7 +41,7 @@ export default class Register extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Last Name"
+							placeholder="LAST NAME"
 							onChangeText={(val) => {this.changeLastNameHandler(val)}}
 						/>        
 					</View>
@@ -51,8 +50,8 @@ export default class Register extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Username"
-							onChangeText={(val) => {this.changeLoginNameHandler(val)}}
+							placeholder="USERNAME"
+							onChangeText={(val) => {this.changeUserNameHandler(val)}}
 						/>        
 					</View>
 					<Text style={{fontSize:10}}> </Text>
@@ -60,7 +59,7 @@ export default class Register extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Email"
+							placeholder="EMAIL"
 							onChangeText={(val) => {this.changeEmailHandler(val)}}
 						/>        
 					</View>
@@ -69,7 +68,7 @@ export default class Register extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Password"
+							placeholder="PASSWORD"
 							secureTextEntry={true}
 							onChangeText={(val) => {this.changePasswordHandler(val)}}
 						/>        
@@ -79,7 +78,7 @@ export default class Register extends Component {
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
-							placeholder="Retype Password"
+							placeholder="RETYPE PASSWORD"
 							secureTextEntry={true}
 							onChangeText={(val) => {this.changeRePasswordHandler(val)}}
 						/>
@@ -88,11 +87,9 @@ export default class Register extends Component {
 					<Text style={{fontSize:15, color:'red',}}>{this.state.message}</Text>
 					<Text style={{fontSize:5}}> </Text>
 					<View style={styles.button}>
-						<Button
-							title="Sign Up"
-							color="#fff"
-							onPress={this.handleClick}
-						/>
+						<TouchableOpacity onPress={this.handleClick} style={styles.appButtonContainer}>
+							<Text style={styles.appButtonText}>SIGN UP</Text>
+						</TouchableOpacity>
 					</View>
 					<Text style={{fontSize:25}}> </Text>
 				</KeyboardAvoidingView>
@@ -100,16 +97,9 @@ export default class Register extends Component {
 		);
 	}
 
-	goToLogin = async () =>
-	{
-		this.props.navigation.navigate('Login');
-	}
-
-	handleClick = async () =>
-	{
+	handleClick = async () => {
 		if (this.state.message.localeCompare(" ") == 0) {
-			try
-			{
+			try {
 				var obj = {
 					fName: global.fName.trim(),
 					lName: global.lName.trim(),
@@ -119,67 +109,57 @@ export default class Register extends Component {
 				};
 				var js = JSON.stringify(obj);
 
-				const response = await fetch('https://cerealboxd.herokuapp.com/api/register',
-					{method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+				const response = await fetch('https://cerealboxd.herokuapp.com/api/register', {
+					method: 'POST',
+					body: js,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
 
 				var res = JSON.parse(await response.text());
 
-				if( res.id <= 0 )
-				{
-					this.setState({message: "User/Password combination incorrect" });
-				}
-				else
-				{
-					global.userName = res.userName;
-					global.password = res.password;
-					global.fName = res.fName;
-					global.lName = res.lName;
-					global.email = res.email;
-					global.userId = res.id;
-					this.props.navigation.navigate('Home');
-				}
+				global.userName = res.userName;
+				global.password = res.password;
+				global.fName = res.fName;
+				global.lName = res.lName;
+				global.email = res.email;
+				global.userId = res.id;
+				this.props.navigation.navigate('Login');
 			}
-			catch(e)
-			{
-				this.setState({message: e.message });
+			catch(e) {
+				this.setState({message: e.message});
 			}
 		}
 	}	
 
-	changeFirstNameHandler = async (val) =>
-	{
+	changeFirstNameHandler = async (val) => {
 		global.fName = val;
 	}	
 
-	changeLastNameHandler = async (val) =>
-	{
+	changeLastNameHandler = async (val) => {
 		global.lName = val;
 	}	
 
-	changeUsernameHandler = async (val) =>
-	{
+	changeUserNameHandler = async (val) => {
 		global.userName = val;
 	}	
 
-	changePasswordHandler = async (val) =>
-	{
+	changePasswordHandler = async (val) => {
 		global.password = val;
 	}	
 
-	changeRePasswordHandler = async (val) =>
-	{
+	changeRePasswordHandler = async (val) => {
 		global.repassword = val;
 		if (global.repassword.localeCompare(global.password) != 0) {
 			this.setState({message: "Passwords do not match!"});
 		}
 		else {
-
 			this.setState({message: ' '});
 		}
 	}	
 
-	changeEmailHandler = async (val) =>
-	{
+	changeEmailHandler = async (val) => {
 		global.email = val;
 	} 
 }

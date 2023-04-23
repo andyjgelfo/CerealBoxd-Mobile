@@ -1,8 +1,11 @@
 import React, {Component, useState} from 'react';
 import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView} from 'react-native';
-import {createStackNavigator, createAppContainer, } from 'react-navigation';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import styles from "../Styles/Home.js";
+import styles from "../Styles/Search.js";
+import AOS from 'aos';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+global.search = '';
+global.jsonSearch;
 
 export default class SearchScreen extends Component {
 
@@ -14,81 +17,267 @@ export default class SearchScreen extends Component {
 		}
 	}
 
+	
+
 	render() {
+		this.populateCereals();
+
 		return (
-			<SafeAreaView style={styles.container}>
+			<View style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
-				<Text>Search!</Text>
-			</SafeAreaView>
+				<View style={styles.profileBar}>
+					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
+					<Text style={{fontSize:100}}> </Text>
+					<View style={styles.profileLogo}>
+						{/* <Button title='' onPress={this.props.navigation.navigate('Login')} /> */}
+					</View>
+				</View>
+				<TextInput
+					style={styles.searchBar}
+					placeholder="SEARCH"
+					onChangeText={(val) => {this.changeSearchHandler(val)}}
+				/>
+				<ScrollView style={{flexDirection: 'column', alignSelf: 'center'}}>
+					<Text>{this.state.searchCriteria}</Text>
+					{global.jsonSearch.results.map(image => {
+						return <Image style={{justifyContent: 'flex-start'}} source={{width: 100, height: 140, uri: image.image}} />
+					})}
+					<Text> </Text>
+					<View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+					</View>
+					<Text> </Text>
+					<View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+					</View>
+					<Text> </Text>
+					<View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+					</View>
+					<Text> </Text>
+					<View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image
+							style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}} 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+					</View>
+					<Text> </Text>
+					<View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+						<Image 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+						<Text>   </Text>
+						<Image 
+							source={{
+								width: 100,
+								height: 140,
+								uri: "https://picsum.photos/100/140",
+							}}
+						/>
+					</View>
+				</ScrollView>
+			</View>
 		)
 	}
 
-	// handleCardClick = async () => {
-	// 	var obj = {
-	// 		userId: global.userId,
-	// 		card: global.card
-	// 	};
-	// 	var js = JSON.stringify(obj);
+	handleCardClick = async () => {
+		var obj = {
+			userId: global.userId,
+			card: global.card
+		};
+		var js = JSON.stringify(obj);
 
-	// 	try {
-	// 		const response = await fetch('https://cop4331-10.herokuapp.com/api/addcard', {
-	// 			method: 'POST',
-	// 			body: js,
-	// 			headers: {
-	// 				'Content-Type': 'application/json'
-	// 			}
-	// 		});
+		try {
+			const response = await fetch('https://cop4331-10.herokuapp.com/api/addcard', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 
-	// 		var res = JSON.parse(await response.text());
+			var res = JSON.parse(await response.text());
 
-	// 		this.setState({newCard: "Your card has been added"});
-	// 	}
-	// 	catch(e) {
-	// 		this.setState({newCard: e.message});
-	// 	}
-	// }
+			this.setState({newCard: "Your card has been added"});
+		}
+		catch(e) {
+			this.setState({newCard: e.message});
+		}
+	}
 
-	// handleSearchClick = async () => {
-	// 	var obj = {
-	// 		userId: global.userId,
-	// 		search: global.search
-	// 	};
-	// 	var js = JSON.stringify(obj);
+	handleSearch = async () => {
+		var obj = {
+			collection: "box",
+			column: "name",
+			target: global.search
+		};
+		var js = JSON.stringify(obj);
 
-	// 	try {
-	// 		const response = await fetch('https://cop4331-10.herokuapp.com/api/searchcards', {
-	// 			method: 'POST',
-	// 			body: js,
-	// 			headers: {
-	// 				'Content-Type': 'application/json'
-	// 			}
-	// 		});
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/search', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 
-	// 		var res = JSON.parse(await response.text());
+			var res = JSON.parse(await response.text());
 
-	// 		var _results = res.results;
+			var cerealData = res.results;
 
-	// 		var resultText = '';
-	// 		for (var i=0; i<_results.length; i++) {
-	// 			resultText += _results[i];
-	// 			if (i < _results.length - 1) {
-	// 				resultText += '\n';
-	// 			}
-	// 		}
-	// 		resultText += '\n';
+			var resultText = '';
+			for (var i = 0; i < cerealData.length; i++) {
+				resultText += cerealData[i].image + i;
+				if (i < cerealData.length - 1) {
+					resultText += '\n';
+				}
+			}
+			resultText += '\n';
+			global.jsonSearch = res;
 
-	// 		this.setState({searchCriteria: resultText});
-	// 	}
-	// 	catch(e) {
-	// 		this.setState({searchCriteria: e.message});
-	// 	}
-	// }
+			this.setState({searchCriteria: resultText});
+		}
+		catch(e) {
+			this.setState({searchCriteria: e.message});
+		}
+	}
 
-	// changeSearchHandler = async (val) => {
-	// 	global.search = val;
-	// }
+	changeSearchHandler = async (val) => {
+		global.search = val;
+		this.handleSearch();
+	}
 
-	// changeCardHandler = async (val) => {
-	// 	global.card = val;
-	// }
+	populateCereals  = async () => {
+		var obj = {
+			collection: "box",
+			column: "name",
+			target: ''
+		};
+		var js = JSON.stringify(obj);
+
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/search', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			global.jsonSearch = JSON.parse(await response.text());
+		}
+		catch(e) {
+			this.setState({searchCriteria: e.message});
+		}
+	}
 }
