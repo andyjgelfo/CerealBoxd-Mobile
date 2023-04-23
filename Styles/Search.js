@@ -15,6 +15,15 @@ const styles = StyleSheet.create({
 			height: 3
 		}
 	},
+	cerealImage: {
+		bottom: 0,
+		borderRadius: 8,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
+	},
 	container: {
 		backgroundColor:'#2C3440',
 		flex: 1,

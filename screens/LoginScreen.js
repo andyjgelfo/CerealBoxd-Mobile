@@ -23,7 +23,8 @@ export default class Login extends Component {
 	constructor() {
 		super()
 		this.state = {
-			 message: ' '
+			 message: ' ',
+			 fontsLoaded: false
 		}
 	}
 
