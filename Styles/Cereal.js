@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
     cerealBoxImgContainer: {
         width: 170,
-		height: 230,
+		height: 220,
 		marginTop: 117,
 		alignItems: 'center',
 		//borderRadius: 20,
@@ -48,13 +48,27 @@ const styles = StyleSheet.create({
 		height: 200,
 		margin: 10,
 		marginLeft: 0,
+		marginRight:20,
 		flexDirection: 'row',
 		shadowOpacity: 0.25,
 		shadowOffset: {
 			width: 0,
 			height: 3
 		},
-				borderWidth: 4,
+
+    },
+	ratingButtons: {
+        width: 170,
+		height: 50,
+		marginTop: 3,
+		marginLeft: 13,
+		alignItems:'center',
+		flexDirection: 'row',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
     },
     cerealBoxImg: {
         width: '90%',
@@ -69,8 +83,8 @@ const styles = StyleSheet.create({
 		},
     },
 	Like: {
-        width: '200%',
-		height: '100%',
+        width: '150%',
+		height: '105%',
 		alignItems: 'center',
 		borderRadius: 3,
 		marginRight:10,
@@ -80,11 +94,12 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3
 		},
-		resizeMode:'contain'
+		resizeMode:'contain',
+
     },
 
 	Comment: {
-        width: '200%',
+        width: '100%',
 		height: '100%',
 		alignItems: 'center',
 		shadowOpacity: 0.25,
@@ -94,6 +109,17 @@ const styles = StyleSheet.create({
 		},
 		resizeMode:'contain'
     },
+	Star:{
+        width: '100%',
+		height: '90%',
+		alignItems: 'center',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
+		resizeMode:'contain'
+	  },
     cerealInfoBox: {
         width: 217,
 		height: 230,
@@ -111,7 +137,7 @@ const styles = StyleSheet.create({
     },
 	cerealDayBox: {
 		width: 400,
-		height: 250,
+		height: 'auto',
 		backgroundColor: '#F2EAC1',
 		alignItems: 'center',
 		borderRadius: 20,
@@ -122,6 +148,8 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3
 		},
+		alignSelf: 'flex-start',
+		
 
 	},
 	topCerealsBox: {
@@ -143,6 +171,7 @@ const styles = StyleSheet.create({
         width: 400,
         alignContent: 'center',
         alignSelf: 'center',
+		marginTop: 70
     },
 	logo: {
 		width: 250,
@@ -225,12 +254,18 @@ const styles = StyleSheet.create({
 		padding: 20
 	  },
 	  Media:{
-		width:'36%',
-		height:'25%',
+		width:'55%',
+		height:'30%',
 		flexDirection:'column',
-		borderWidth:5,
-		alignContent:'center'
+		alignContent:'left'
 	  },
+	  Stars:{
+		width:'28%',
+		height:'100%',
+		flexDirection:'column',
+		alignContent:'center',
+	  },
+	  
 	  Icon: {
 		width: 50,
 		height: 40,

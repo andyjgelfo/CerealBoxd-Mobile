@@ -14,6 +14,11 @@ let customFonts =
 	'SemiBold20' : require('../assets/Fonts/SharpGroteskSemiBold20.otf'),
 }
 
+//Image URLS
+let heartWhiteUrl = '../assets/Heart.png';
+let heartPinkUrl = '../assets/Heart_Pink.png';
+let curHeartUrl = '../assets/Heart.png';
+
 //Vars for cereal info
 let cerealName = "";
 let cerealReleaseDate = "";
@@ -22,6 +27,11 @@ let cerealKillNum = "";
 let cerealDescription = "";
 let cerealNutritionFacts = "";
 let cerealImgSrc = "";
+
+//Vars for review info
+let reviewText = "";
+let reviewerName = "";
+let reviewRating = "";
 
 //Begin the code
 export default class CerealScreen extends Component {
@@ -32,8 +42,11 @@ export default class CerealScreen extends Component {
 		this.state = {
 			 searchCriteria: '\n ',
 			 getCerealCriteria: '\n',
+			 getReviewCriteria: '\n',
 			 newCard: '\n ',
-			 fontsLoaded: false
+			 fontsLoaded: false,
+			 heartTint: 'white'
+
 		}
 	}
 
@@ -54,6 +67,9 @@ export default class CerealScreen extends Component {
 		//Get the cereal!
 		this.handleGetCereal();
 
+		//Get the reviews!
+		//this.handleGetReview();
+
 		//If the fonts didn't load, ret null
 		if(!this.state.fontsLoaded) {
 			return null;
@@ -70,7 +86,11 @@ export default class CerealScreen extends Component {
 				{/*Background img */}
 				<Image style={styles.background} source={require("../assets/background.png")} />
 
-				<ScrollView style={styles.scrollView} {...{centerContent: true}} automaticallyAdjustsScrollIndicatorInsets={false}>
+				
+
+				<ScrollView style={styles.scrollView}>
+
+				
 
 
 					{/*Container for the Cereal Box Image and Cereal Info*/}
@@ -86,42 +106,66 @@ export default class CerealScreen extends Component {
 							<View style={styles.mediaButtons} {...{justifyContent: 'center'}}>
 								
 								{/*Like*/}
-								<Pressable onPress={this.goToFavorites} style={styles.Media}>
-									<Image style={styles.Like}source={require("../assets/Heart.png")}/>
+								<Pressable onPressIn={() => alert("evan")} delayPressIn={0}   style={styles.Media}  android_ripple={{borderless: true, radius:50}}>
+									<Image style= {styles.Like} {...{tintColor: this.state.heartTint}} source={require(curHeartUrl)}/>
 								</Pressable>
 								
+								
 								{/*Review*/}
-								<Pressable onPress={this.goToFavorites} style={styles.Media}>
+								<Pressable onPress={this.goToFavorites} style={styles.Media} >
 									<Image style={styles.Comment} source={require("../assets/chat-box.png")}/>
 								</Pressable>
+
 							</View>
 						</View>
 
 						<Text> &nbsp; </Text>
+						<View>
+							{/*Container for cereal info */}
+							<View style={styles.cerealInfoBox} {...{justifyContent: 'center'}}>
 
-						{/*Container for cereal info */}
-						<View style={styles.cerealInfoBox} {...{justifyContent: 'center'}}>
+								<Text style={{fontFamily: 'SemiBold20', textAlign: 'center', fontSize: '22'}}>{cerealName}</Text>
+								<Text> &nbsp;</Text>
 
-							<Text style={{fontFamily: 'SemiBold20', textAlign: 'center', fontSize: '22'}}>{cerealName}</Text>
-							<Text> &nbsp;</Text>
+								<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: '20'}}>Released in {cerealReleaseDate}</Text>
+								<Text> &nbsp;</Text>
 
-							<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: '20'}}>Released in {cerealReleaseDate}</Text>
-							<Text> &nbsp;</Text>
+								<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: '20'}}>Produced by {cerealManufacturer}</Text>
+								<Text> &nbsp;</Text>
 
-							<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: '20'}}>Produced by {cerealManufacturer}</Text>
-							<Text> &nbsp;</Text>
+								<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: '20'}}>Will It Kill You Meter: {cerealKillNum}</Text>
+							</View>
 
-							<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: '20'}}>Will It Kill You Meter: {cerealKillNum}</Text>
-						
+							{/*stars buttons*/}
+							<View style={styles.ratingButtons} {...{justifyContent: 'center'}}>
+									
+								{/*Stars*/}
+								<Pressable onPress={this.goToFavorites} style={styles.Stars}>
+									<Image style={styles.Star}source={require("../assets/Star.png")}/>
+								</Pressable>
+								
+								<Pressable onPress={this.goToFavorites} style={styles.Stars}>
+									<Image style={styles.Star} source={require("../assets/Star.png")}/>
+								</Pressable>
+
+								<Pressable onPress={this.goToFavorites} style={styles.Stars}>
+									<Image style={styles.Star}source={require("../assets/Star.png")}/>
+								</Pressable>
+
+								<Pressable onPress={this.goToFavorites} style={styles.Stars}>
+									<Image style={styles.Star} source={require("../assets/Star.png")}/>
+								</Pressable>
+
+								<Pressable onPress={this.goToFavorites} style={styles.Stars}>
+									<Image style={styles.Star}source={require("../assets/Star.png")}/>
+								</Pressable>
+
+							</View>
 						</View>
-
 					</View>
 
 
 					{/* Spacing */}
-					<Text> &nbsp; </Text>
-					<Text> &nbsp; </Text>
-					<Text> &nbsp; </Text>
 					<Text> &nbsp; </Text>
 					<Text> &nbsp; </Text>
 					<Text> &nbsp; </Text>
@@ -137,6 +181,20 @@ export default class CerealScreen extends Component {
 					{/*Box for Description & Nutritional Facts*/}
 					<View style={styles.cerealDayBox} {...{justifyContent: 'center', width: 300, height: 150}} >
 
+						<Text> &nbsp; </Text>
+
+
+						{/*Description*/}
+						<View>
+							<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Description</Text>			
+							<Text>&nbsp;</Text>			
+							<Text style={{fontSize:15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300}}>{cerealDescription}</Text>			
+						</View>
+
+						<Text> &nbsp; </Text>
+						<Text> &nbsp; </Text>
+
+				
 						{/*Description*/}
 						<View>
 							<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Ingredients</Text>			
@@ -147,12 +205,42 @@ export default class CerealScreen extends Component {
 						{/*Spacing*/}
 						<Text> &nbsp; </Text>
 						<Text> &nbsp; </Text>
+					</View>
 
-						{/*{/*Nutritional Facts}
-						<View style={{flexDirection:'row'}}>
-							<Text style={{fontSize: 19, textAlign: 'center', fontFamily: 'SemiBold20'}}>Nutritional Facts</Text>
-						</View>*/}
 
+					<Text> &nbsp; </Text>
+					<Text> &nbsp; </Text>
+					<Text> &nbsp; </Text>
+
+
+					{/*Box for Reviews*/}
+					<View style={styles.cerealDayBox} {...{justifyContent: 'center', width: 300, height: 150, alignSelf: 'flex-start', alignItems: 'center'}} >
+
+						<Text> &nbsp; </Text>
+
+
+						{/*Reviews*/}
+						<View>
+							<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Reviews</Text>			
+							<Text>&nbsp;</Text>			
+
+
+
+
+							<Text style={{fontSize:15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300}}>{reviewText} - {reviewerName}</Text>			
+						</View>
+						
+
+						<Text> &nbsp; </Text>
+						<Text> &nbsp; </Text>
+
+
+
+						
+
+						{/*Spacing*/}
+						<Text> &nbsp; </Text>
+						<Text> &nbsp; </Text>
 					</View>
 
 				<Text>&nbsp;</Text>
@@ -202,7 +290,7 @@ export default class CerealScreen extends Component {
 		var obj = {
 			"collection": "box",
 			"column": "_id",
-			"target": "6439058c00cb8368e8db21ca" //ID - change this for every cereal
+			"target": "640cedc6dffdb4d4ce4bf16c" //ID - change this for every cereal
 		}
 
 		var js = JSON.stringify(obj);
@@ -239,6 +327,47 @@ export default class CerealScreen extends Component {
 		}
 	}
 
+
+	//API Call to get a Cereal's review details via its ID
+	handleGetReview = async () => {
+		
+		//Object var
+		var obj = {
+			"collection": "reviews",
+			"column": "_id",
+			"target": "6444d82888ed540facf88139" //ID - change this for every cereal
+		}
+
+		var js = JSON.stringify(obj);
+
+		//Connect to the API
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/searchByID', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			//Get results
+			var res = JSON.parse(await response.text());
+			var results = res.results;
+
+			//Populate current cereal data from the returned JSON
+			reviewText = results.body;
+			reviewerName = results.reviewerName;
+			reviewRating = results.rating;
+
+			//Set state
+			this.setState({getReviewCriteria: ''});
+
+		}
+		catch(error) {
+			this.setState({getReviewCriteria: e.message});
+		}
+	}
+
 	goToHome = async() => {
 		this.props.navigation.navigate('Home');
 	}
@@ -261,6 +390,13 @@ export default class CerealScreen extends Component {
 
 	userReviewCereal = async() => {
 		
+	}
+
+	tapHeart = async() => {
+		
+		//this.setState({heartTint: 'pink'});
+		console.log("bruh")
+
 	}
 
 
