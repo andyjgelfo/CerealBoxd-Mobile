@@ -6,9 +6,6 @@ import { createAppContainer } from "react-navigation";
 import LoginScreen from './screens/LoginScreen';
 import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
-import HomeScreen from './screens/HomeScreen';
-import SearchScreen from './screens/SearchScreen'
-import FavoritesScreen from './screens/FavoritesScreen';
 
 export default class App extends React.Component {
 	render() {
@@ -35,26 +32,7 @@ const AppNavigator = createStackNavigator({
 			headerShown: false // Will hide header for HomePage
 		}
 	},
-	Home: {
-		screen: HomeScreen,
-		navigationOptions: {
-			headerShown: false // Will hide header for HomePage
-		}
-	},
-	Search: {
-		screen: SearchScreen,
-		navigationOptions: {
-			headerShown: false // Will hide header for HomePage
-		}
-	},
-	Favorites: {
-		screen: FavoritesScreen,
-		navigationOptions: {
-			headerShown: false
-		}
-	}
-},
-{
+}, {
 	initialRouteName: "Login"
 });
 

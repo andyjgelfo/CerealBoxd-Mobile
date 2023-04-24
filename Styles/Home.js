@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	inputBox: {
-		width: 300,
+		width: '90%',
 		backgroundColor: '#F2EAC1',
 		alignItems: 'center',
 		borderRadius: 20,

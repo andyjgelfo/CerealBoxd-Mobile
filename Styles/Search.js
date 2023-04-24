@@ -15,14 +15,15 @@ const styles = StyleSheet.create({
 			height: 3
 		}
 	},
-	cerealImage: {
-		bottom: 0,
-		borderRadius: 8,
-		shadowOpacity: 0.25,
+	cerealColumn: {
+		shadowOpacity: 0.5,
 		shadowOffset: {
 			width: 0,
 			height: 3
 		}
+	},
+	cerealImage: {
+		borderRadius: 8
 	},
 	container: {
 		backgroundColor:'#2C3440',
