@@ -6,6 +6,7 @@ import { createAppContainer } from "react-navigation";
 import LoginScreen from './screens/LoginScreen';
 import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
+import CerealScreen from './screens/CerealScreen';
 
 export default class App extends React.Component {
 	render() {
@@ -32,6 +33,12 @@ const AppNavigator = createStackNavigator({
 			headerShown: false // Will hide header for HomePage
 		}
 	},
+	Cereal: {
+		screen: CerealScreen,
+		navigationOptions: {
+			headerShown: false
+		}
+	}
 }, {
 	initialRouteName: "Login"
 });

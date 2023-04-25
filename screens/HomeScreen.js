@@ -61,7 +61,7 @@ export default class HomeScreen extends Component {
 				<Text> &nbsp; </Text>
 
 				{/*First Box - Cereal of the Day*/}
-				<View style={styles.inputBox} {...{justifyContent: 'center', width: 200, height: 150}} >
+				<View style={styles.cerealDayBox} {...{justifyContent: 'center', width: 200, height: 150}} >
 
 					{/*Cereal of the Day*/}
 					<View style={{flexDirection:'row'}}>
@@ -81,7 +81,7 @@ export default class HomeScreen extends Component {
 
 				<Text>&nbsp;</Text>
 
-				<View style={styles.inputBox} {...{justifyContent: 'center', alignItems: 'center', width: 300, height: 300}}>
+				<View style={styles.topCerealsBox} {...{justifyContent: 'center', alignItems: 'center', width: 300, height: 300}}>
 
 				<Text>&nbsp;</Text>
 				<Text>&nbsp;</Text>
@@ -97,7 +97,7 @@ export default class HomeScreen extends Component {
 
 					<View style={{flexDirection:'row'}}>
 
-						<Text style={{fontSize:20, textAlign: 'left', fontFamily:'SemiBold15'}}>
+						<Text style={{fontSize:20, textAlign: 'center', fontFamily:'SemiBold15'}}>
 				
 								{topCereals}
 						</Text>
@@ -118,24 +118,6 @@ export default class HomeScreen extends Component {
 					<View style={styles.profileLogo} />
 				</View>
 			</View>
-
-
-			{/* <View style={styles.NavContainer}>
-				<View style={styles.NavBar}>
-				<Pressable onPress={this.goToHome} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
-					<Image source = {require('../assets/icons8-home-page-48.png')} style={styles.Icon} />
-				</Pressable>
-				<Pressable onPress={this.goToSearch} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
-					<Image source = {require('../assets/icons8-search-64.png')} style={styles.Icon} />
-				</Pressable>
-				<Pressable onPress={this.goToCereals} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
-					<Image source = {require('../assets/icons8-cereal-64.png')} style={styles.Icon} />
-				</Pressable>
-				<Pressable onPress={this.goToFavorites} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
-					<Image source = {require('../assets/icons8-rating-48.png')} style={styles.Icon} />
-				</Pressable>  
-				</View>
-			</View> */}
 
 		</View>
 			

@@ -17,7 +17,7 @@ global.cereal = {
 	ingredients: ""
 }
 
-let jsonSearch = {
+global.jsonSearch = {
 	results: []
 };
 
@@ -32,11 +32,12 @@ export default class SearchScreen extends Component {
 	}
 
 	render() {
+		this.handleSearch();
 		return (
 			<View style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
 				<View style={styles.profileBar}>
-					<Image style={styles.logo} source={require("../assets/trimlogo.png")} onLoad={this.handleSearch}/>
+					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
 					<Text style={{fontSize:100}}> </Text>
 					<View style={styles.profileLogo}>
 						{/* <Button title='' onPress={this.props.navigation.navigate('Login')} /> */}
@@ -51,10 +52,10 @@ export default class SearchScreen extends Component {
 					<Text> </Text>
 					<View style={{flexDirection: 'row', justifyContent: 'center'}}>
 						<View>
-							{jsonSearch.results.map(cereal => {
-								if (jsonSearch.results.indexOf(cereal) % 3 == 0)
+							{global.jsonSearch.results.map(cereal => {
+								if (global.jsonSearch.results.indexOf(cereal) % 3 == 0)
 									return (
-									<View key={jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
+									<View key={global.jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
 										<TouchableOpacity onPress={() => {this.handleClick(cereal)}}>
 											<Image
 												resizeMode='stretch'
@@ -67,12 +68,12 @@ export default class SearchScreen extends Component {
 									)
 							})}
 						</View>
-						<Text>     </Text>
+						<Text>      </Text>
 						<View>
-							{jsonSearch.results.map(cereal => {
-								if (jsonSearch.results.indexOf(cereal) % 3 == 1)
+							{global.jsonSearch.results.map(cereal => {
+								if (global.jsonSearch.results.indexOf(cereal) % 3 == 1)
 									return (
-									<View key={jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
+									<View key={global.jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
 										<TouchableOpacity onPress={() => {this.handleClick(cereal)}}>
 											<Image
 												resizeMode='stretch'
@@ -85,12 +86,12 @@ export default class SearchScreen extends Component {
 									)
 							})}
 						</View>
-						<Text>     </Text>
+						<Text>      </Text>
 						<View>
-							{jsonSearch.results.map(cereal => {
-								if (jsonSearch.results.indexOf(cereal) % 3 == 2)
+							{global.jsonSearch.results.map(cereal => {
+								if (global.jsonSearch.results.indexOf(cereal) % 3 == 2)
 									return (
-									<View key={jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
+									<View key={global.jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
 										<TouchableOpacity onPress={() => {this.handleClick(cereal)}}>
 											<Image
 												resizeMode='stretch'
@@ -131,7 +132,7 @@ export default class SearchScreen extends Component {
 				}
 			});
 
-			jsonSearch = JSON.parse(await response.text());
+			global.jsonSearch = JSON.parse(await response.text());
 
 			this.setState({searchCriteria: resultText});
 		}

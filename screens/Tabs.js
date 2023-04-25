@@ -34,7 +34,7 @@ export default class Tabs extends Component {
 	render() {
 		return (
 			<NavigationContainer>
-				<Tab.Navigator initialRouteName={'SearchTab'} screenOptions={({route}) => ({
+				<Tab.Navigator initialRouteName={'HomeTab'} screenOptions={({route}) => ({
 					tabBarIcon: ({focused}) => {
 						if (route.name === 'HomeTab') {
 							return iconName = focused?
