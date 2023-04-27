@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, TouchableOpacity, Icon} from 'react-native';
+import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, TouchableOpacity, Icon} from 'react-native';
 import styles from "../Styles/Cereal.js";
 
 //Image URLS
@@ -78,7 +78,7 @@ export default class CerealScreen extends Component {
 
 							<View style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}}>
 								{/*Image*/}
-								<Image style={styles.cerealBoxImg} source={{uri: cerealImgSrc}} resizeMode={'stretch'} />
+								<Image style={styles.cerealBoxImg} source={{uri: cerealImgSrc != ""? cerealImgSrc: global.jsonSearch.results[0].image}} resizeMode={'stretch'} />
 							</View>
 
 

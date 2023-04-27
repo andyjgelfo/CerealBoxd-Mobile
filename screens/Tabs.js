@@ -2,7 +2,7 @@ import React, {Component, useState} from "react";
 import {Image} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from "./HomeScreen.js";
@@ -19,7 +19,7 @@ function SearchTab() {
 			<Stack.Screen
 				name="Search"
 				component={SearchScreen}
-				options={{ headerShown: false }}
+				options={{headerShown: false}}
 			/>
 			<Stack.Screen
 				name="Cereal"
