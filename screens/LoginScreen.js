@@ -83,6 +83,11 @@ export default class Login extends Component {
 						color="#1C2143"
 						onPress={this.goToRegister}
 					/>
+					<Button
+						title="Forgot Your Password?"
+						color="#1C2143"
+						onPress={this.goToForgotPassord}
+					/>
 					<Text style={{fontSize:5}}> </Text>
 				</KeyboardAvoidingView>
 				{/* <Image source={require("../assets/splash.png")} /> */}
@@ -94,7 +99,7 @@ export default class Login extends Component {
 		global.code = Math.floor(100000 + Math.random() * 900000);
 		try {
 			var obj = {
-				to: email,
+				to: global.email,
 				subject: "Confirm Your Email Address",
 				output: 'Your verification code is ' + global.code
 			};
@@ -175,5 +180,9 @@ export default class Login extends Component {
 	
 	goToRegister = async() => {
 		this.props.navigation.navigate('Register');
+	}
+
+	goToForgotPassord = async() => {
+		this.props.navigation.navigate('Forgot');
 	}
 }

@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
 import Verification from './screens/Verification';
+import ForgotScreen from './screens/ForgotScreen';
 
 export default class App extends React.Component {
 	render() {
@@ -35,6 +36,12 @@ const AppNavigator = createStackNavigator({
 	},
 	Verify: {
 		screen: Verification,
+		navigationOptions: {
+			headerShown: false
+		}
+	},
+	Forgot: {
+		screen: ForgotScreen,
 		navigationOptions: {
 			headerShown: false
 		}

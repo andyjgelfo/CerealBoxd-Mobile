@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
 		fontSize: 40,
 		fontWeight: 'bold',
 		fontFamily: 'SemiBold20',
+		textAlign: 'center',
 		color: '#1C2143',
 		shadowOpacity: 0.25,
 		shadowOffset: {
