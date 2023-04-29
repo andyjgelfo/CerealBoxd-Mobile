@@ -2,21 +2,20 @@ import React, {Component, useState} from 'react';
 import {ActivityIndicator, AppButton, View, Text, TextInput, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import styles from "../Styles/Login.js"
 
-global.localName = '';
-global.password = '';
-global.repassword = '';
-global.userId = -1;
-global.fName = '';
-global.lName = '';
-global.search = '';
-global.card = '';
+let fName = '';
+let lName = '';
+let userName = '';
+let email = '';
+let password = '';
+let repassword = '';
 
 export default class Register extends Component {
 
 	constructor() {
 		super()
 		this.state = {
-			message: ' '
+			message: ' ',
+			error: ' '
 		}
 	}
 
@@ -84,28 +83,94 @@ export default class Register extends Component {
 						/>
 					</View>
 					<Text style={{fontSize:5}}> </Text>
-					<Text style={{fontSize:15, color:'red',}}>{this.state.message}</Text>
+					<Text style={{fontSize:15, fontFamily: 'SemiBold15', color:'red',}}>{this.state.message}</Text>
 					<Text style={{fontSize:5}}> </Text>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={this.handleClick} style={styles.appButtonContainer}>
 							<Text style={styles.appButtonText}>SIGN UP</Text>
 						</TouchableOpacity>
 					</View>
-					<Text style={{fontSize:25}}> </Text>
+					<Text style={{fontSize:5}}> </Text>
+					<Text style={{fontSize:15, fontFamily: 'SemiBold15', color:'red',}}>{this.state.error}</Text>
+					<Text style={{fontSize:5}}> </Text>
 				</KeyboardAvoidingView>
 			</SafeAreaView>
 		);
 	}
 
+	usernameTaken = async () => {
+		try {
+			var obj = {
+				username: userName,
+			};
+			var js = JSON.stringify(obj);
+
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/checkUsername', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			var res = JSON.parse(await response.text());
+
+			if (res.results == 1) {
+				return true;
+			}
+			return false;
+		}
+		catch(e) {
+			this.setState({error: e.message});
+			return true;
+		}
+	}
+
+	testValidity = async () => {
+		if (fName.localeCompare('') == 0) {
+			this.setState({message: "Enter your first name!"});
+			return false;
+		}
+		if (lName.localeCompare('') == 0) {
+			this.setState({message: "Enter your last name!"});
+			return false;
+		}
+		if (userName.localeCompare('') == 0) {
+			this.setState({message: "Enter a username!"});
+			return false;
+		}
+		if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)) {
+			this.setState({message: 'Enter a valid email address!'});
+			return false;
+		}
+		if (repassword.localeCompare(password) != 0) {
+			this.setState({message: "Passwords do not match!"});
+			return false;
+		}
+		if (password.localeCompare('') == 0) {
+			this.setState({message: 'Enter a password!'});
+			return false;
+		}
+		if (await this.usernameTaken()) {
+			this.setState({message: "Username taken. Choose a different one!"});
+			return false;
+		}
+		else {
+			this.setState({message: ' '});
+			return true;
+		}
+	}
+
 	handleClick = async () => {
-		if (this.state.message.localeCompare(" ") == 0) {
+		this.setState({message: ' ', error: ' '});
+		if (await this.testValidity()) {
 			try {
 				var obj = {
-					fName: global.fName.trim(),
-					lName: global.lName.trim(),
-					userName: global.userName.trim(),
-					password: global.password.trim(),
-					email: global.email.trim()
+					fName: fName,
+					lName: lName,
+					userName: userName,
+					password: password,
+					email: email
 				};
 				var js = JSON.stringify(obj);
 
@@ -118,48 +183,43 @@ export default class Register extends Component {
 				});
 
 				var res = JSON.parse(await response.text());
-
-				global.userName = res.userName;
-				global.password = res.password;
-				global.fName = res.fName;
-				global.lName = res.lName;
-				global.email = res.email;
-				global.userId = res.id;
+				
+				this.setState({message: ' '});
 				this.props.navigation.navigate('Login');
 			}
 			catch(e) {
-				this.setState({message: e.message});
+				this.setState({error: e.message});
 			}
 		}
 	}	
 
 	changeFirstNameHandler = async (val) => {
-		global.fName = val;
+		fName = val.trim();
 	}	
 
 	changeLastNameHandler = async (val) => {
-		global.lName = val;
+		lName = val.trim();
 	}	
 
 	changeUserNameHandler = async (val) => {
-		global.userName = val;
+		userName = val.trim();
 	}	
 
 	changePasswordHandler = async (val) => {
-		global.password = val;
+		password = val;
 	}	
 
 	changeRePasswordHandler = async (val) => {
-		global.repassword = val;
-		if (global.repassword.localeCompare(global.password) != 0) {
+		repassword = val;
+		if (repassword.localeCompare(password) != 0) {
 			this.setState({message: "Passwords do not match!"});
 		}
 		else {
-			this.setState({message: ' '});
+			this.setState({message: " "});
 		}
 	}	
 
 	changeEmailHandler = async (val) => {
-		global.email = val;
+		email = val.trim();
 	} 
 }

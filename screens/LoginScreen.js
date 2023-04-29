@@ -4,13 +4,14 @@ import jwt_decode from "jwt-decode";
 import styles from "../Styles/Login.js";
 import * as Font from 'expo-font';
 
-global.localName = '';
-global.password = '';
-global.userId = -1;
+global.userId = '';
 global.firstName = '';
 global.lastName = '';
-global.search = '';
-global.card = '';
+global.email = '';
+global.id = -1;
+global.code;
+
+let password = '';
 
 let customFonts = {
 	'SemiBold15': require('../assets/Fonts/SharpGroteskSemiBold15.otf'),
@@ -88,13 +89,38 @@ export default class Login extends Component {
 			</SafeAreaView>
 		);
 	}
+
+	sendEmail = async () => {
+		global.code = Math.floor(100000 + Math.random() * 900000);
+		try {
+			var obj = {
+				to: email,
+				subject: "Confirm Your Email Address",
+				output: 'Your verification code is ' + global.code
+			};
+			var js = JSON.stringify(obj);
+
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/sendemail', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			this.props.navigation.navigate('Verify');
+		}
+		catch(e) {
+			this.setState({error: e.message});
+		}
+	}
 	
 	handleClick = async () => {
-		// this.props.navigation.navigate('Home');
+		this.setState({message: ' '});
 		try {
 			var obj = {
 				login: global.loginName,
-				password: global.password
+				password: password
 			};
 			var js = JSON.stringify(obj);
 			
@@ -110,11 +136,22 @@ export default class Login extends Component {
 			
 			if (res.accessToken != undefined) {
 				var decoded = jwt_decode(res.accessToken);
+
+				global.userId = decoded.userId;
 				global.firstName = decoded.firstName;
 				global.lastName = decoded.lastName;
-				global.userId = decoded.id;
-				this.setState({message: ' '});
-				this.props.navigation.navigate('Tabs');
+				global.email = decoded.email;
+				global.id = decoded.id;
+
+				if (decoded.confirmed) {
+					this.setState({message: ' '});
+					this.props.navigation.navigate('Tabs');
+				}
+				else {
+					this.setState({message: 'Email not confirmed yet'});
+					await this.sendEmail();
+					this.props.navigation.navigate('Verify');
+				}
 			}
 			else if (res.error != undefined) {
 				this.setState({message: res.error});
@@ -133,11 +170,10 @@ export default class Login extends Component {
 	} 
 	
 	changePasswordHandler = async (val) => {
-		global.password = val;
+		password = val;
 	} 
 	
 	goToRegister = async() => {
-		this.props.navigation.navigate('Verify');
+		this.props.navigation.navigate('Register');
 	}
-	
 }

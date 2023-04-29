@@ -3,13 +3,7 @@ import {ActivityIndicator, Button, View, Text, TextInput, Image, SafeAreaView, K
 import jwt_decode from "jwt-decode";
 import styles from "../Styles/Login";
 
-global.localName = '';
-global.password = '';
-global.userId = -1;
-global.firstName = '';
-global.lastName = '';
-global.search = '';
-global.card = '';
+let code = ''
 
 export default class Verification extends Component {
 
@@ -30,14 +24,15 @@ export default class Verification extends Component {
 					<Text style={{fontSize:20}}> </Text>
 					<Text style={styles.title}>Confirm Email</Text>
 					<Text style={{fontSize:20}}> </Text>
+					<Text style={{fontFamily: 'SemiBold15', textAlign: 'center'}}>A verification code has been sent to {global.email}, please enter it</Text>
+					<Text style={{fontSize:20}}> </Text>
 					<View style={{flexDirection:'row'}}>
 						<TextInput
 							style={styles.textInput}
 							placeholder="CODE"
-							onChangeText={(val) => {this.changeLoginNameHandler(val)}}
+							onChangeText={(val) => {this.changeCodeHandler(val)}}
 						/>        
 					</View>
-					<Text style={{fontSize:10}}> </Text>
 
 					
 					<Text style={{fontSize:5}}> </Text>
@@ -48,10 +43,8 @@ export default class Verification extends Component {
 							<Text style={styles.appButtonText}>SUBMIT</Text>
 						</TouchableOpacity>
 					</View>
-					<Text style={{fontSize:5}}> </Text>
+					<Text style={{fontSize:25}}> </Text>
 				
-					<Text> &nbsp; </Text>
-					<Text> &nbsp; </Text>
 				</KeyboardAvoidingView>
 				{/* <Image source={require("../assets/splash.png")} /> */}
 			</SafeAreaView>
@@ -59,54 +52,37 @@ export default class Verification extends Component {
 	}
 	
 	handleClick = async () => {
-		// this.props.navigation.navigate('Home');
-		try {
-			var obj = {
-				login: global.loginName,
-				password: global.password
-			};
-			var js = JSON.stringify(obj);
-			
-			const response = await fetch('https://cerealboxd.herokuapp.com/api/login', {
-				method: 'POST',
-				body: js,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-			
-			var res = JSON.parse(await response.text());
-			
-			if (res.accessToken != undefined) {
-				var decoded = jwt_decode(res.accessToken);
-				global.firstName = decoded.firstName;
-				global.lastName = decoded.lastName;
-				global.userId = decoded.id;
-				this.setState({message: ' '});
-				this.props.navigation.navigate('Home');
-			}
-			else if (res.error != undefined) {
+		if (code == global.code) {
+			try {
+				var obj = {
+					_id: global.id,
+				};
+				var js = JSON.stringify(obj);
+				
+				const response = await fetch('https://cerealboxd.herokuapp.com/api/confirmEmail', {
+					method: 'POST',
+					body: js,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				
+				var res = JSON.parse(await response.text());
+
 				this.setState({message: res.error});
+				this.props.navigation.navigate('Login');
+
 			}
-			else {
-				this.setState({message: "Error"});
+			catch(e) {
+				this.setState({message: e.message});
 			}
 		}
-		catch(e) {
-			this.setState({message: e.message});
+		else {
+			this.setState({message: "Incorrect code"});
 		}
 	} 
 	
-	changeLoginNameHandler = async (val) => {
-		global.loginName = val;
+	changeCodeHandler = async (val) => {
+		code = val;
 	} 
-	
-	changePasswordHandler = async (val) => {
-		global.password = val;
-	} 
-	
-	goToRegister = async() => {
-		this.props.navigation.navigate('Register');
-	}
-	
 }
