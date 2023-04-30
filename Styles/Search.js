@@ -109,7 +109,32 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3
 		}
-	}
+	},
+	favBar: {
+        width: '90%',
+        height: 40,
+        fontSize: 30,
+        fontFamily: 'SemiBold15',
+        backgroundColor: '#F2EAC1',
+        alignItems: 'center',
+        textAlign: 'center',
+        borderRadius: 20,
+        borderColor: '#1C2143',
+        borderWidth: 2,
+        shadowOpacity: 0.25,
+        shadowOffset: {
+            width: 0,
+            height: 3
+        }
+    },
+    barText: {
+        width: '90%',
+        height: 40,
+        fontSize: 30,
+        fontFamily: 'SemiBold15',
+        alignItems: 'center',
+        textAlign: 'center',
+    }
 })
 
 export default styles;

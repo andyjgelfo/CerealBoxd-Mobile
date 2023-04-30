@@ -1,5 +1,5 @@
-import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, TouchableOpacity, Icon} from 'react-native';
+import React, { Component, useState } from 'react';
+import { ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, TouchableOpacity, Icon } from 'react-native';
 import styles from "../Styles/Cereal.js";
 
 //Image URLS
@@ -20,6 +20,14 @@ let cerealImgSrc = global.cereal.image;
 let reviewText = "";
 let reviewerName = "";
 let reviewRating = "";
+let otherReviewPlaceholder = "No reviews yet...";
+let yourReviewPlaceholder = "Write a Review!";
+let addOrEdit = "ADD";
+
+//Globals (not sure if these need to be global aaa)
+global.yourReviewText = '';
+global.reviewRating = 0;
+
 
 //Begin the code
 export default class CerealScreen extends Component {
@@ -28,12 +36,17 @@ export default class CerealScreen extends Component {
 	constructor() {
 		super()
 		this.state = {
-			 searchCriteria: '\n ',
-			 getCerealCriteria: '\n',
-			 getReviewCriteria: '\n',
-			 newCard: '\n ',
-			 fontsLoaded: false,
-			 heartTint: 'white'
+			searchCriteria: '\n ',
+			getCerealCriteria: '\n',
+			getReviewCriteria: '\n',
+			newCard: '\n ',
+			fontsLoaded: false,
+			heartTint: 'white',
+			star1Tint: 'white',
+			star2Tint: 'white',
+			star3Tint: 'white',
+			star4Tint: 'white',
+			star5Tint: 'white',
 
 		}
 	}
@@ -42,184 +55,246 @@ export default class CerealScreen extends Component {
 	//Render
 	render() {
 
-		//Get the cereals!
-		this.handleGetCereal();
+		//Check if the cereal is favorited by the user!
+		this.handleCheckFavorite();
+
+		this.handleCheckRating();
+
+		//Get the cereal!
+		//this.handleGetCereal();
 
 		//Get the reviews!
-		// this.handleGetReview();
+		this.handleGetReviews();
+
 
 		return (
 
 			
-		<View style={styles.container}>
 
-			{/*Main container*/}
+
 			<View style={styles.container}>
 
-				{/*Background img */}
-				<Image style={styles.background} source={require("../assets/background.png")} />
+				{/*Main container*/}
+				<View style={styles.container}>
 
-				
-				{/*Profile Bar*/}
-				<View style={styles.profileBar}>
-					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
-					<Text style={{fontSize:100}}> </Text>
-					<View style={styles.profileLogo} />
-				</View>
-
-				<ScrollView>
-
-					<View style={{alignItems: 'center'}}>
-
-						{/*Container for the Cereal Box Image and Cereal Info*/}
-						<View style={{flexDirection: 'row', alignItems: 'center'}}>
-
-							{/* Container for cereal box image*/}
-
-							<View style={{shadowOpacity: 0.5, shadowOffset: {width: 0, height: 3}}}>
-								{/*Image*/}
-								<Image style={styles.cerealBoxImg} source={{uri: cerealImgSrc}} resizeMode={'stretch'} />
-							</View>
+					{/*Background img */}
+					<Image style={styles.background} source={require("../assets/background.png")} />
 
 
-							<Text> &nbsp;</Text>
-							<View>
-								{/*Container for cereal info */}
-								<View style={styles.cerealInfoBox} {...{justifyContent: 'center'}}>
-
-									<Text style={{fontFamily: 'SemiBold20', textAlign: 'center', fontSize: 22}}>{cerealName}</Text>
-									<Text> &nbsp;</Text>
-
-									<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: 20}}>Released in {cerealReleaseDate}</Text>
-									<Text> &nbsp;</Text>
-
-									<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: 20}}>Produced by {cerealManufacturer}</Text>
-									<Text> &nbsp;</Text>
-
-									<Text style={{fontFamily: 'SemiBold15', textAlign: 'center', fontSize: 20}}>Will It Kill You Meter: {cerealKillNum}</Text>
-								</View>
-							</View>
-						</View>
-							<Text> &nbsp;</Text>
-						{/*Container for media buttons*/}
-						<View style={styles.mediaButtons}>
-							<Text>    </Text>
-								
-							{/*Like*/}
-							<TouchableOpacity onPress={() => alert("evan")}>
-								<Image style= {styles.Like} source={require("../assets/Heart.png")}/>
-							</TouchableOpacity>
-							
-							{/*Review*/}
-							<TouchableOpacity onPress={() => this.goToFavorites}>
-								<Image style={styles.Comment} source={require("../assets/chat-box.png")}/>
-							</TouchableOpacity>
-								
-							<Text>           </Text>
-							{/*Stars*/}
-							<TouchableOpacity onPress={() => this.goToFavorites}>
-								<Image style={styles.Star}source={require("../assets/Star.png")}/>
-							</TouchableOpacity>
-							
-							<TouchableOpacity onPress={() => this.goToFavorites}>
-								<Image style={styles.Star} source={require("../assets/Star.png")}/>
-							</TouchableOpacity>
-
-							<TouchableOpacity onPress={() => this.goToFavorites}>
-								<Image style={styles.Star}source={require("../assets/Star.png")}/>
-							</TouchableOpacity>
-
-							<TouchableOpacity onPress={() => this.goToFavorites}>
-								<Image style={styles.Star} source={require("../assets/Star.png")}/>
-							</TouchableOpacity>
-
-							<TouchableOpacity onPress={() => this.goToFavorites}>
-								<Image style={styles.Star}source={require("../assets/Star.png")}/>
-							</TouchableOpacity>
-						</View>
-
-						<Text> &nbsp;</Text>
-
-						{/*Box for Description & Nutritional Facts*/}
-						<View style={styles.cerealDayBox}>
-
-							<Text> &nbsp; </Text>
-
-
-							{/*Description*/}
-							<View>
-								<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Description</Text>			
-								<Text>&nbsp;</Text>			
-								<Text style={{fontSize:15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300}}>{cerealDescription}</Text>			
-							</View>
-
-							<Text> &nbsp; </Text>
-							<Text> &nbsp; </Text>
-
-					
-							{/*Description*/}
-							<View>
-								<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Ingredients</Text>			
-								<Text>&nbsp;</Text>			
-								<Text style={{fontSize:15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300}}>{cerealNutritionFacts}</Text>			
-							</View>
-
-							{/*Spacing*/}
-							<Text> &nbsp; </Text>
-							<Text> &nbsp; </Text>
-						</View>
-
-
-						<Text> &nbsp; </Text>
-						<Text> &nbsp; </Text>
-						<Text> &nbsp; </Text>
-
-
-						{/*Box for Reviews*/}
-						<View style={styles.cerealDayBox} {...{justifyContent: 'center', width: 300, height: 150}} >
-
-							<Text> &nbsp; </Text>
-
-
-							{/*Reviews*/}
-							<View>
-								<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Reviews</Text>			
-								<Text>&nbsp;</Text>			
-
-
-
-
-								<Text style={{fontSize:15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300}}>{reviewText} - {reviewerName}</Text>			
-							</View>
-							
-
-							<Text> &nbsp; </Text>
-							<Text> &nbsp; </Text>
-
-
-
-							
-
-							{/*Spacing*/}
-							<Text> &nbsp; </Text>
-							<Text> &nbsp; </Text>
-						</View>
-
-					<Text>&nbsp;</Text>
+					{/*Profile Bar*/}
+					<View style={styles.profileBar}>
+						<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
+						<Text style={{ fontSize: 100 }}> </Text>
+						<View style={styles.profileLogo} />
 					</View>
 
+					<ScrollView nestedScrollEnabled={true}>
 
-				</ScrollView>
+						<View style={{ alignItems: 'center' }}>
+
+							{/*Container for the Cereal Box Image and Cereal Info*/}
+							<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+								{/* Container for cereal box image*/}
+
+								<View style={{ shadowOpacity: 0.5, shadowOffset: { width: 0, height: 3 } }}>
+									{/*Image*/}
+									<Image style={styles.cerealBoxImg} source={{ uri: global.cereal.image }} resizeMode={'stretch'} />
+								</View>
+
+
+								<Text> &nbsp;</Text>
+								<View>
+									{/*Container for cereal info */}
+									<View style={styles.cerealInfoBox} {...{ justifyContent: 'center' }}>
+
+										<Text style={{ fontFamily: 'SemiBold20', textAlign: 'center', fontSize: 22 }}>{global.cereal.name}</Text>
+										<Text> &nbsp;</Text>
+
+										<Text style={{ fontFamily: 'SemiBold15', textAlign: 'center', fontSize: 20 }}>Released in {global.cereal.releaseDate}</Text>
+										<Text> &nbsp;</Text>
+
+										<Text style={{ fontFamily: 'SemiBold15', textAlign: 'center', fontSize: 20 }}>Produced by {global.cereal.manufacturer}</Text>
+										<Text> &nbsp;</Text>
+
+										<Text style={{ fontFamily: 'SemiBold15', textAlign: 'center', fontSize: 20 }}>Will It Kill You Meter: {global.cereal.willItKillYou}</Text>
+									</View>
+								</View>
+							</View>
+							<Text> &nbsp;</Text>
+							{/*Container for media buttons*/}
+							<View style={styles.mediaButtons}>
+								<Text>    </Text>
+
+								{/*Like*/}
+								<TouchableOpacity onPress={this.handleFavoriteCereal}>
+									<Image style={styles.Like} {...{ tintColor: this.state.heartTint }} source={require("../assets/Heart.png")} />
+								</TouchableOpacity>
+
+								{/*Review*/}
+								{/*<TouchableOpacity onPress={() => this.goToReview}>
+								<Image style={styles.Comment} source={require("../assets/chat-box.png")}/>
+							</TouchableOpacity>*/}
+
+								<Text>           </Text>
+								{/*Stars*/}
+								<TouchableOpacity onPress={this.tapStar1}>
+									<Image style={styles.Star} {...{ tintColor: this.state.star1Tint }} source={require("../assets/Star.png")} />
+								</TouchableOpacity>
+
+								<TouchableOpacity onPress={this.tapStar2}>
+									<Image style={styles.Star} {...{ tintColor: this.state.star2Tint }} source={require("../assets/Star.png")} />
+								</TouchableOpacity>
+
+								<TouchableOpacity onPress={this.tapStar3}>
+									<Image style={styles.Star} {...{ tintColor: this.state.star3Tint }} source={require("../assets/Star.png")} />
+								</TouchableOpacity>
+
+								<TouchableOpacity onPress={this.tapStar4}>
+									<Image style={styles.Star} {...{ tintColor: this.state.star4Tint }} source={require("../assets/Star.png")} />
+								</TouchableOpacity>
+
+								<TouchableOpacity onPress={this.tapStar5}>
+									<Image style={styles.Star} {...{ tintColor: this.state.star5Tint }} source={require("../assets/Star.png")} />
+								</TouchableOpacity>
+							</View>
+
+							<Text> &nbsp;</Text>
+
+							{/*Box for Description & Nutritional Facts*/}
+							<View style={styles.cerealDayBox}>
+
+								<Text> &nbsp; </Text>
+
+
+								{/*Description*/}
+								<View>
+									<Text style={{ fontSize: 25, textAlign: 'center', fontFamily: 'SemiBold20' }}>Description</Text>
+									<Text>&nbsp;</Text>
+									<Text style={{ fontSize: 15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300 }}>{global.cereal.description}</Text>
+								</View>
+
+								<Text> &nbsp; </Text>
+								<Text> &nbsp; </Text>
+
+
+								{/*Description*/}
+								<View>
+									<Text style={{ fontSize: 25, textAlign: 'center', fontFamily: 'SemiBold20' }}>Ingredients</Text>
+									<Text>&nbsp;</Text>
+									<Text style={{ fontSize: 15, textAlign: 'center', fontFamily: 'SemiBold15', width: 300 }}>{global.cereal.ingredients}</Text>
+								</View>
+
+								{/*Spacing*/}
+								<Text> &nbsp; </Text>
+								<Text> &nbsp; </Text>
+							</View>
+
+
+							<Text> &nbsp; </Text>
+							<Text> &nbsp; </Text>
+							<Text> &nbsp; </Text>
+
+
+
+							<View style={styles.favBar}>
+								<Text style={styles.barText}>Reviews</Text>
+							</View>
+							<Text>&nbsp;</Text>
+
+							<ScrollView nestedScrollEnabled={true} style={{ flexDirection: 'column', height: 35, backgroundColor: '#1C2143', borderColor: '#F2EAC1', borderWidth: 3, borderRadius: 10, height: 500 }}>
+								{/*Box for Reviews*/}
+								<View style={{ justifyContent: 'center', width: 350, height: 'auto' }} >
+									{/*Reviews*/}
+									<Text>&nbsp;</Text>
+									{global.reviews.results.map((review) => {
+										return (
+											<View>
+												<Text style={{ fontSize: 25, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>{review.rating}/5</Text>
+												<Text style={{ fontSize: 20, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>"{review.body}" - @{review.reviewerName}</Text>
+												<Text>&nbsp;</Text>
+												<Text>&nbsp;</Text>
+											</View>
+										);
+									})}
+								</View>
+							</ScrollView>
+
+
+
+							<Text> &nbsp; </Text>
+							<Text> &nbsp; </Text>
+							<Text> &nbsp; </Text>
+
+
+
+							<View style={styles.favBar}>
+								<Text style={styles.barText}>Write a Review</Text>
+							</View>
+							<Text>&nbsp;</Text>
+
+
+							<View style={{ flexDirection: 'column', height: 35, borderColor: '#1C2143', backgroundColor: '#F2EAC1', borderWidth: 3, borderRadius: 10, height: 'auto' }}>
+								{/*Box for Reviews*/}
+								<View style={{ justifyContent: 'center', width: 350, height: 'auto' }} >
+									{/*Reviews*/}
+									<Text>&nbsp;</Text>
+
+									<TextInput
+										multiline
+										editable
+										style={styles.textInput}
+										placeholder={yourReviewPlaceholder}
+										onChangeText={(val) => { this.changeYourReviewTextHandler(val) }}
+									/>
+
+									<Text>&nbsp;</Text>
+
+
+									<TouchableOpacity onPress={this.handleAddEditClick} style={styles.appButtonContainer}>
+										<Text style={styles.appButtonText}>ADD</Text>
+									</TouchableOpacity>
+
+									<Text>&nbsp;</Text>
+
+									<TouchableOpacity onPress={this.handleClick} style={styles.appButtonContainer}>
+										<Text style={styles.appButtonText}>😃</Text>
+									</TouchableOpacity>
+
+									<Text>&nbsp;</Text>
+
+
+								</View>
 
 
 
 
 
-		</View>
+							</View>
 
 
-			{/*NavBar*/}
-			{/* <View style={styles.NavContainer}>
+							<Text>&nbsp;</Text>
+							<Text>&nbsp;</Text>
+
+
+						</View>
+
+
+
+
+					</ScrollView>
+
+
+
+
+
+
+
+				</View>
+
+
+				{/*NavBar*/}
+				{/* <View style={styles.NavContainer}>
 				<View style={styles.NavBar}>
 				<TouchableOpacity onPress={() => this.goToHome} style={styles.IconBehave} android_ripple={{borderless: true, radius:50}}>
 					<Image source = {require('../assets/icons8-home-page-48.png')} style={styles.Icon} />
@@ -236,14 +311,133 @@ export default class CerealScreen extends Component {
 				</View>
 			</View> */}
 
-		</View>
-			
+			</View>
+
 		)
+	}
+
+	handleCheckFavorite = async () => {
+
+		//alert("starting");
+
+		//Object var
+		var obj = {
+			"collection": "favorites",
+			"column1": "cerealID",
+			"target1": global.cereal._id, //ID - change this for every cereal
+			"column2": "userID",
+			"target2": global.userId
+		}
+
+		var js = JSON.stringify(obj);
+
+		//Connect to the API
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/searchByTwoID', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			//Get results
+			var res = JSON.parse(await response.text());
+			var results = res.results;
+
+
+
+
+
+			//Populate current cereal data from the returned JSON
+
+			if (results != null) {
+				this.setState({ heartTint: "#c41e3a" })
+			}
+
+
+		}
+		catch (e) {
+			this.setState({ heartTint: e.message });
+		}
+	}
+
+
+	handleCheckRating = async () => {
+
+		//alert("starting");
+
+		//Object var
+		var obj = {
+			"collection": "reviews",
+			"column1": "cerealID",
+			"target1": global.cereal._id, //ID - change this for every cereal
+			"column2": "reviewerID",
+			"target2": global.userId
+		}
+
+		var js = JSON.stringify(obj);
+
+		//Connect to the API
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/searchByTwoID', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			//Get results
+			var res = JSON.parse(await response.text());
+			var results = res.results;
+
+			//Get a var to represent the current numeric rating
+			let userRating;
+
+			if (results != null) {
+				userRating = results.rating;
+			}
+
+			//Depending on the user rating, light up the correct number of stars!
+			switch (userRating) {
+				case 1:
+					this.setState({ star1Tint: '#40bcf4' });
+					break;
+				case 2:
+					this.setState({ star1Tint: '#40bcf4' });
+					this.setState({ star2Tint: '#40bcf4' });
+					break;
+				case 3:
+					this.setState({ star1Tint: '#40bcf4' });
+					this.setState({ star2Tint: '#40bcf4' });
+					this.setState({ star3Tint: '#40bcf4' });
+					break;
+				case 4:
+					this.setState({ star1Tint: '#40bcf4' });
+					this.setState({ star2Tint: '#40bcf4' });
+					this.setState({ star3Tint: '#40bcf4' });
+					this.setState({ star4Tint: '#40bcf4' });
+					break;
+				case 5:
+					this.setState({ star1Tint: '#40bcf4' });
+					this.setState({ star2Tint: '#40bcf4' });
+					this.setState({ star3Tint: '#40bcf4' });
+					this.setState({ star4Tint: '#40bcf4' });
+					this.setState({ star5Tint: '#40bcf4' });
+					break;
+				default:
+					break;
+			}
+		}
+		catch (e) {
+			this.setState({ star1Tint: e.message });
+		}
 	}
 
 	//API Call to get a Cereal's details via its ID
 	handleGetCereal = async () => {
-		
+
 		//Object var
 		var obj = {
 			"collection": "box",
@@ -277,30 +471,30 @@ export default class CerealScreen extends Component {
 			cerealImgSrc = results.image;
 
 			//Set state
-			this.setState({getCerealCriteria: ''});
+			this.setState({ getCerealCriteria: '' });
 
 		}
-		catch(e) {
-			this.setState({getCerealCriteria: e.message});
+		catch (e) {
+			this.setState({ getCerealCriteria: e.message });
 		}
 	}
 
 
 	//API Call to get a Cereal's review details via its ID
-	handleGetReview = async () => {
-		
+	handleGetReviews = async () => {
+
 		//Object var
 		var obj = {
-			"collection": "reviews",
-			"column": "_id",
-			"target": global.cereal._id //ID - change this for every cereal
+			collection: "reviews",
+			column: "cerealID",
+			target: global.cereal._id //ID - change this for every cereal
 		}
 
 		var js = JSON.stringify(obj);
 
 		//Connect to the API
 		try {
-			const response = await fetch('https://cerealboxd.herokuapp.com/api/searchByID', {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/searchByIDmulti', {
 				method: 'POST',
 				body: js,
 				headers: {
@@ -309,53 +503,244 @@ export default class CerealScreen extends Component {
 			});
 
 			//Get results
-			var res = JSON.parse(await response.text());
-			var results = res.results;
-
-			//Populate current cereal data from the returned JSON
-			reviewText = results.body;
-			reviewerName = results.reviewerName;
-			reviewRating = results.rating;
+			global.reviews = JSON.parse(await response.text());
 
 			//Set state
-			this.setState({getReviewCriteria: ''});
+			this.setState({ getReviewCriteria: '' });
 
 		}
-		catch(e) {
-			this.setState({getReviewCriteria: e.message});
+		catch (e) {
+			this.setState({ getReviewCriteria: e.message });
 		}
 	}
 
-	goToHome = async() => {
+	handleFavoriteCereal = async () => {
+
+
+		//alert("user ID: " + global.userId);
+		//alert("cereal ID: " + global.cereal._id);
+
+		//Object var
+		var obj = {
+			"userID": global.userId,
+			"cerealID": global.cereal._id //ID - change this for every cereal
+		}
+
+		var js = JSON.stringify(obj);
+
+
+
+		//If the user is trying to HEART this cereal
+		if (this.state.heartTint == "white") {
+			//Connect to the API - addFavorite
+			try {
+				const response = await fetch('https://cerealboxd.herokuapp.com/api/addFavorite', {
+					method: 'POST',
+					body: js,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+
+				//Get results
+				var res = JSON.parse(await response.text());
+				var results = res.results;
+
+				this.setState({ heartTint: '#c41e3a' });
+
+			}
+			catch (e) {
+				this.setState({ heartTint: 'white' });
+
+			}
+		}
+
+		//If the user is trying to UNHEART this cereal
+		else if (this.state.heartTint == "#c41e3a") {
+			//Connect to the API - deleteFavorite
+			try {
+				const response = await fetch('https://cerealboxd.herokuapp.com/api/deleteFavorite', {
+					method: 'POST',
+					body: js,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+
+				//Get results
+				var res = JSON.parse(await response.text());
+				var results = res.results;
+
+				this.setState({ heartTint: 'white' });
+
+			}
+			catch (e) {
+				this.setState({ heartTint: e.message });
+
+			}
+		}
+
+
+	}
+
+	goToHome = async () => {
 		this.props.navigation.navigate('Home');
 	}
 
-	goToSearch = async() => {
+	goToSearch = async () => {
 		this.props.navigation.navigate('Search');
 	}
 
-	goToCereal = async() => {
+	goToCereal = async () => {
 		this.props.navigation.navigate('Evan');
 	}
 
-	goToFavorites = async() => {
+	goToFavorites = async () => {
 		this.props.navigation.navigate('Cereal');
 	}
 
-	userLikeCereal = async() => {
+	goToReview = async () => {
+		this.props.navigation.navigate('Review');
+	}
+
+	tapHeart = async () => {
+
+
+		if (this.state.heartTint == '#c41e3a') {
+			this.setState({ heartTint: 'white' });
+
+		}
+		else {
+			this.setState({ heartTint: '#c41e3a' });
+		}
+		//console.log("bruh")
 
 	}
 
-	userReviewCereal = async() => {
+	tapStar1 = async () => {
+
+		this.setState({ star1Tint: '#40bcf4' });
+		this.setState({ star2Tint: 'white' });
+		this.setState({ star3Tint: 'white' });
+		this.setState({ star4Tint: 'white' });
+		this.setState({ star5Tint: 'white' });
+
+		global.reviewRating = 1;
+
+	}
+
+	tapStar2 = async () => {
+
+		this.setState({ star1Tint: '#40bcf4' });
+		this.setState({ star2Tint: '#40bcf4' });
+		this.setState({ star3Tint: 'white' });
+		this.setState({ star4Tint: 'white' });
+		this.setState({ star5Tint: 'white' });
+
+		global.reviewRating = 2;
+
+
+	}
+
+	tapStar3 = async () => {
+
+		this.setState({ star1Tint: '#40bcf4' });
+		this.setState({ star2Tint: '#40bcf4' });
+		this.setState({ star3Tint: '#40bcf4' });
+		this.setState({ star4Tint: 'white' });
+		this.setState({ star5Tint: 'white' });
+
+		global.reviewRating = 3;
+
+
+	}
+
+	tapStar4 = async () => {
+
+		this.setState({ star1Tint: '#40bcf4' });
+		this.setState({ star2Tint: '#40bcf4' });
+		this.setState({ star3Tint: '#40bcf4' });
+		this.setState({ star4Tint: '#40bcf4' });
+		this.setState({ star5Tint: 'white' });
+
+		global.reviewRating = 4;
+
+
+	}
+
+	tapStar5 = async () => {
+
+		this.setState({ star1Tint: '#40bcf4' });
+		this.setState({ star2Tint: '#40bcf4' });
+		this.setState({ star3Tint: '#40bcf4' });
+		this.setState({ star4Tint: '#40bcf4' });
+		this.setState({ star5Tint: '#40bcf4' });
+
+		global.reviewRating = 5;
+
+
+	}
+
+	changeYourReviewTextHandler = async (val) => {
+		global.yourReviewText = val;
+	}
+
+	handleAddEditClick = async () => {
+
 		
-	}
+		//  const {reviewerID, cerealID, rating, body} = req.body;
 
-	tapHeart = async() => {
+		//If the user hasn't added a review yet - ADD
+		if(addOrEdit == "ADD")
+		{
+			try {
+				var obj = {
+					reviewerID: global.userId,
+					cerealID: global.cereal._id,
+					rating: global.reviewRating,
+					body: global.yourReviewText
+				};
+				var js = JSON.stringify(obj);
+				
+				const response = await fetch('https://cerealboxd.herokuapp.com/api/addReview', {
+					method: 'POST',
+					body: js,
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				
+				var res = JSON.parse(await response.text());
+				
+				/*if (res.accessToken != undefined) {
+					var decoded = jwt_decode(res.accessToken);
+					global.firstName = decoded.firstName;
+					global.lastName = decoded.lastName;
+					global.userId = decoded.id;
+					this.setState({message: ' '});
+					this.props.navigation.navigate('Tabs');
+				}
+				else if (res.error != undefined) {
+					this.setState({message: res.error});
+				}
+				else {
+					this.setState({message: "Error"});
+				}*/
+
+				//This will refresh the reviews! Yippee!!
+				RNRestart. Restart();
+			}
+			catch(e) {
+				this.setState({message: e.message});
+			}
+		}
+
+
+
+
+		// this.props.navigation.navigate('Home');
 		
-		//this.setState({heartTint: 'pink'});
-		console.log("bruh")
-
-	}
+	} 
 
 
 }

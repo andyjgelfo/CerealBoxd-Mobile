@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import Constants from 'expo-constants';
 
 const styles = StyleSheet.create({
 	background: {
@@ -18,8 +19,37 @@ const styles = StyleSheet.create({
 	container: {
 		backgroundColor:'#2C3440',
 		flex: 1,
+		alignContent: 'center',
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	cerealDayBox: {
+		width: 300,
+		height: 150,
+		backgroundColor: '#F2EAC1',
+		alignItems: 'center',
+		borderRadius: 20,
+		borderColor: '#1C2143',
+		borderWidth: 4,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
+	},
+	topCerealsBox: {
+		width: 300,
+		height: 300,
+		backgroundColor: '#F2EAC1',
+		alignItems: 'center',
+		borderRadius: 20,
+		borderColor: '#1C2143',
+		borderWidth: 4,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
 	},
 	inputBox: {
 		width: '90%',
