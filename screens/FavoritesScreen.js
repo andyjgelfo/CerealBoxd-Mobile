@@ -36,23 +36,23 @@ export default class SearchScreen extends Component {
 	}
 
 	render() {
-		this.handleReviews();
-		this.handleFavs();
+		//this.handleReviews();
+		//this.handleFavs();
 		return (
 			<View style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
 				<View style={styles.profileBar}>
-					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
+					<Image style={styles.logo} source={require("../assets/trimlogo.png")} onLoad={() => {this.handleFavsAndReviews()}} />
 					<Text style={{fontSize:100}}> </Text>
 					<View style={styles.profileLogo}>
 						{/* <Button title='' onPress={this.props.navigation.navigate('Login')} /> */}
 					</View>
 				</View>
 
-				<View style={styles.favBar}{...{marginLeft: 50}}>
+				<View style={styles.favBar}>
 						<Text style={styles.barText}>Your Favorite Cereals</Text>
 				</View>
-				<ScrollView style={{flexDirection: 'column', height:'10%'}}>
+				<ScrollView style={{flexDirection: 'column', height:'45%'}}>
 					<Text> </Text>
 					<View style={{flexDirection: 'row', justifyContent: 'center'}}>
 						
@@ -117,21 +117,26 @@ export default class SearchScreen extends Component {
 				</View>	
 				<Text>&nbsp;</Text>
 
-				<ScrollView style={{flexDirection: 'column', height:'auto', width: 'auto', backgroundColor:'#1C2143', borderColor:'#F2EAC1', borderWidth: 3, borderRadius: 10}}>
-							{/*Box for Reviews*/}
-							<View style={styles.cerealDayBox} {...{justifyContent: 'center', width: 300, height: 150}} >
-								{/*Reviews*/}
-								{global.reviews.results.map((review) => {
-									return (
-										<View>
-											<Text style={{fontSize:25, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color:'white', marginLeft: 10}}>{review.cerealName} - {review.rating}/5</Text>
-											<Text style={{fontSize:20, textAlign: 'left', fontFamily: 'SemiBold15', width: 300 ,color:'white', marginLeft: 10}}>{review.body}</Text>
-											<Text>&nbsp;</Text>
-										</View>
-									);
-								})}
-							</View>
+				<ScrollView nestedScrollEnabled={true} style={{ flexDirection: 'column', height: 35, backgroundColor: '#1C2143', borderColor: '#F2EAC1', borderWidth: 3, borderRadius: 10, height: 500 }}>
+					{/*Box for Reviews*/}
+					<View style={{ justifyContent: 'center', width: 350, height: 'auto' }} >
+						{/*Reviews*/}
+						<Text>&nbsp;</Text>
+						{global.reviews.results.map((review) => {
+							return (
+								<View>
+									<Text style={{ fontSize: 25, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>{review.cerealName} - {review.rating}/5</Text>
+									<Text style={{ fontSize: 20, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>"{review.body}"</Text>
+									<Text>&nbsp;</Text>
+									<Text>&nbsp;</Text>
+								</View>
+							);
+						})}
+					</View>
 				</ScrollView>
+
+				<Text>&nbsp;</Text>
+
 
 			</View>
 		)
@@ -197,5 +202,10 @@ export default class SearchScreen extends Component {
 		catch(e) {
 			this.setState({getReviewCriteria: e.message});
 		}
+	}
+
+	handleFavsAndReviews = async () => {
+		this.handleFavs();
+		this.handleReviews();
 	}
 }

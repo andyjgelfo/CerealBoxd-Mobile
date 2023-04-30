@@ -24,7 +24,7 @@ let otherReviewPlaceholder = "No reviews yet...";
 let yourReviewPlaceholder = "Write a Review!";
 let addOrEdit = "ADD";
 let smileyOrDelete = "😃";
-let didYouAddStars = "";
+//let didYouAddStars = "";
 
 //Globals (not sure if these need to be global aaa)
 let yourReviewText = '';
@@ -54,7 +54,8 @@ export default class CerealScreen extends Component {
 			star4Tint: 'white',
 			star5Tint: 'white',
 			addOrEdit: 'ADD',
-			smileyOrDelete: '😃'
+			smileyOrDelete: '😃',
+			didYouAddStars: ''
 
 		}
 	}
@@ -64,15 +65,15 @@ export default class CerealScreen extends Component {
 	render() {
 
 		//Check if the cereal is favorited by the user!
-		this.handleCheckFavorite();
+		//this.handleCheckFavorite();
 
-		this.handleCheckRating();
+		//this.handleCheckRating();
 
 		//Get the cereal!
 		//this.handleGetCereal();
 
 		//Get the reviews!
-		this.handleGetReviews();
+		//this.handleGetReviews();
 
 
 		return (
@@ -108,6 +109,8 @@ export default class CerealScreen extends Component {
 								<View style={{ shadowOpacity: 0.5, shadowOffset: { width: 0, height: 3 } }}>
 									{/*Image*/}
 									<Image style={styles.cerealBoxImg} source={{ uri: global.cereal.image }} resizeMode={'stretch'} />
+
+
 								</View>
 
 
@@ -136,7 +139,7 @@ export default class CerealScreen extends Component {
 
 								{/*Like*/}
 								<TouchableOpacity onPress={this.handleFavoriteCereal}>
-									<Image style={styles.Like} {...{ tintColor: this.state.heartTint }} source={require("../assets/Heart.png")} />
+									<Image style={styles.Like} {...{ tintColor: this.state.heartTint }} source={require("../assets/Heart.png")}  onLoad={() => {this.handleCheckBeforeLoad()}} />
 								</TouchableOpacity>
 
 								{/*Review*/}
@@ -229,26 +232,31 @@ export default class CerealScreen extends Component {
 										onChangeText={(val) => { this.changeYourReviewTextHandler(val) }}
 									/>
 
-									<Text style={{color: 'red', textAlign: 'center'}}>{didYouAddStars}</Text>
+									<Text>&nbsp;</Text>
+
+									<View style={styles.mediaButtons}>
+										<TouchableOpacity onPress={this.handleAddEditClick} style={styles.appButtonContainer}>
+											<Text style={styles.appButtonText}>{this.state.addOrEdit}</Text>
+										</TouchableOpacity>
+
+										<Text>&nbsp;</Text>
+										<Text>&nbsp;</Text>
+										<Text>&nbsp;</Text>
+
+										<TouchableOpacity onPress={this.handleSmileyDeleteClick} style={styles.appButtonContainer}>
+											<Text style={styles.appButtonText}>{this.state.smileyOrDelete}</Text>
+										</TouchableOpacity>
+									</View>
+
+									
+
+									<Text>&nbsp;</Text>
+
+									<Text style={{color: 'red', textAlign: 'center'}}>{this.state.didYouAddStars}</Text>
+
 									<Text>&nbsp;</Text>
 
 
-
-									<TouchableOpacity onPress={this.handleAddEditClick} style={styles.appButtonContainer}>
-										<Text style={styles.appButtonText}>{this.state.addOrEdit}</Text>
-									</TouchableOpacity>
-
-									<Text>&nbsp;</Text>
-
-									<TouchableOpacity onPress={this.handleClick} style={styles.appButtonContainer}>
-										<Text style={styles.appButtonText}>{this.state.smileyOrDelete}</Text>
-									</TouchableOpacity>
-
-									<Text>&nbsp;</Text>
-									<Text>&nbsp;</Text>
-									<Text>&nbsp;</Text>
-									<Text>&nbsp;</Text>
-									<Text>&nbsp;</Text>
 
 
 								</View>
@@ -385,6 +393,9 @@ export default class CerealScreen extends Component {
 			var res = JSON.parse(await response.text());
 			var results = res.results;
 
+			reviewRating = 0;
+			yourReviewPlaceholder = "Write a Review!";
+
 
 			//If the user HAS left a review!
 			if (results != null) {
@@ -441,6 +452,11 @@ export default class CerealScreen extends Component {
 					this.setState({ star5Tint: '#40bcf4' });
 					break;
 				default:
+					this.setState({ star1Tint: 'white' });
+					this.setState({ star2Tint: 'white' });
+					this.setState({ star3Tint: 'white' });
+					this.setState({ star4Tint: 'white' });
+					this.setState({ star5Tint: 'white' });
 					break;
 			}
 		}
@@ -496,6 +512,10 @@ export default class CerealScreen extends Component {
 
 	//API Call to get a Cereal's review details via its ID
 	handleGetReviews = async () => {
+
+
+		this.setState({didYouAddStars: ""});
+
 
 		//Object var
 		var obj = {
@@ -710,7 +730,7 @@ export default class CerealScreen extends Component {
 			if(reviewRating <= 0)
 			{
 				//Give a message and break
-				didYouAddStars = "You forgot to leave a rating above!";
+				this.setState({didYouAddStars: "You forgot to leave a rating above!"});
 			}
 			else
 			{
@@ -742,7 +762,8 @@ export default class CerealScreen extends Component {
 					smileyOrDelete = "DELETE"
 	
 					//This will refresh the reviews! Yippee!!
-					RNRestart. Restart();
+					//RNRestart.Restart();
+					this.handleCheckBeforeLoad();
 					
 	
 					
@@ -778,7 +799,8 @@ export default class CerealScreen extends Component {
 				yourReviewPlaceholder = yourReviewText;
 
 				//This will refresh the reviews! Yippee!!
-				RNRestart.Restart();
+				//RNRestart.Restart();
+				this.handleCheckBeforeLoad();
 			}
 			catch(e) {
 				this.setState({message: e.message});
@@ -819,7 +841,8 @@ export default class CerealScreen extends Component {
 				yourReviewPlaceholder = "Write a Review!";
 
 				//This will refresh the reviews! Yippee!!
-				RNRestart. Restart();
+				//RNRestart. Restart();
+				this.handleCheckBeforeLoad();
 			}
 			catch(e) {
 				this.setState({smileyOrDelete: e.message});
@@ -831,6 +854,17 @@ export default class CerealScreen extends Component {
 		}
 		
 	} 
+
+
+	handleCheckBeforeLoad = async () => {
+
+
+
+		this.handleCheckRating();
+		this.handleCheckFavorite();
+		this.handleGetReviews();
+
+	}
 
 
 }
