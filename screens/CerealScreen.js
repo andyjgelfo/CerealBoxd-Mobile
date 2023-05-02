@@ -327,7 +327,7 @@ export default class CerealScreen extends Component {
 			"column1": "cerealID",
 			"target1": global.cereal._id, //ID - change this for every cereal
 			"column2": "userID",
-			"target2": global.userId
+			"target2": global.id
 		}
 
 		var js = JSON.stringify(obj);
@@ -374,7 +374,7 @@ export default class CerealScreen extends Component {
 			"column1": "cerealID",
 			"target1": global.cereal._id, //ID - change this for every cereal
 			"column2": "reviewerID",
-			"target2": global.userId
+			"target2": global.id
 		}
 
 		var js = JSON.stringify(obj);
@@ -554,7 +554,7 @@ export default class CerealScreen extends Component {
 
 		//Object var
 		var obj = {
-			"userID": global.userId,
+			"userID": global.id,
 			"cerealID": global.cereal._id //ID - change this for every cereal
 		}
 
@@ -736,7 +736,7 @@ export default class CerealScreen extends Component {
 
 				try {
 					var obj = {
-						reviewerID: global.userId,
+						reviewerID: global.id,
 						cerealID: global.cereal._id,
 						rating: reviewRating,
 						body: yourReviewText
@@ -778,7 +778,7 @@ export default class CerealScreen extends Component {
 		else if (this.state.addOrEdit == "EDIT") {
 			try {
 				var obj = {
-					reviewerID: global.userId,
+					reviewerID: global.id,
 					cerealID: global.cereal._id,
 					rating: reviewRating,
 					body: yourReviewText
@@ -818,7 +818,7 @@ export default class CerealScreen extends Component {
 		if (this.state.addOrEdit == "EDIT") {
 			try {
 				var obj = {
-					reviewerID: global.userId,
+					reviewerID: global.id,
 					cerealID: global.cereal._id,
 				};
 				var js = JSON.stringify(obj);
