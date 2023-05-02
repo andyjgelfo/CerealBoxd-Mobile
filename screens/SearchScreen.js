@@ -31,11 +31,6 @@ export default class SearchScreen extends Component {
 		}
 	}
 
-	componentDidMount()
-	{
-		this.changeSearchHandler("");
-	}
-
 	render() {
 		this.handleSearch();
 		return (

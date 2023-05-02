@@ -8,6 +8,10 @@ import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
 import CerealScreen from './screens/CerealScreen';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 export default class App extends React.Component {
 	render() {
 		return <AppContainer />;
