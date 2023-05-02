@@ -4,7 +4,7 @@ import styles from "../Styles/Search.js";
 import AOS from 'aos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-global.search = '';
+let search = '';
 global.cereal = {
 	_id: "",
 	name: "",
@@ -117,7 +117,7 @@ export default class SearchScreen extends Component {
 		var obj = {
 			collection: "box",
 			column: "name",
-			target: global.search
+			target: search
 		};
 		var js = JSON.stringify(obj);
 
@@ -140,7 +140,7 @@ export default class SearchScreen extends Component {
 	}
 
 	changeSearchHandler = async (val) => {
-		global.search = val;
+		search = val;
 		this.handleSearch();
 	}
 }

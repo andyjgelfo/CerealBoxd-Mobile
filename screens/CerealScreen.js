@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, TouchableOpacity, Icon } from 'react-native';
+
 import styles from "../Styles/Cereal.js";
 
 //Image URLS

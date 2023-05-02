@@ -6,7 +6,8 @@ import { createAppContainer } from "react-navigation";
 import LoginScreen from './screens/LoginScreen';
 import Tabs from './screens/Tabs';
 import RegisterScreen from './screens/RegisterScreen';
-import CerealScreen from './screens/CerealScreen';
+import Verification from './screens/Verification';
+import ForgotScreen from './screens/ForgotScreen';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -37,8 +38,14 @@ const AppNavigator = createStackNavigator({
 			headerShown: false // Will hide header for HomePage
 		}
 	},
-	Cereal: {
-		screen: CerealScreen,
+	Verify: {
+		screen: Verification,
+		navigationOptions: {
+			headerShown: false
+		}
+	},
+	Forgot: {
+		screen: ForgotScreen,
 		navigationOptions: {
 			headerShown: false
 		}
