@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, TouchableOpacity, RefreshControl} from 'react-native';
 import styles from "../Styles/Search.js";
 import AOS from 'aos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -25,6 +25,17 @@ global.reviews = {
 	results: []
 };
 
+const App = () => {
+	const [refreshing, setRefreshing] = React.useState(false);
+  
+	const onRefresh = React.useCallback(() => {
+	  setRefreshing(true);
+	  setTimeout(() => {
+		setRefreshing(false);
+	  }, 2000);
+	}, []);
+}
+
 export default class SearchScreen extends Component {
 
 	constructor() {
@@ -44,15 +55,15 @@ export default class SearchScreen extends Component {
 				<View style={styles.profileBar}>
 					<Image style={styles.logo} source={require("../assets/trimlogo.png")} onLoad={() => {this.handleFavsAndReviews()}} />
 					<Text style={{fontSize:100}}> </Text>
-					<View style={styles.profileLogo}>
-						{/* <Button title='' onPress={this.props.navigation.navigate('Login')} /> */}
-					</View>
+					
 				</View>
+
 
 				<View style={styles.favBar}>
 						<Text style={styles.barText}>Your Favorite Cereals</Text>
 				</View>
-				<ScrollView style={{flexDirection: 'column', height:'45%'}}>
+				<ScrollView style={{flexDirection: 'column', height:'45%'}} refreshControl={
+          <RefreshControl refreshing={false} onRefresh={() => this.handleFavsAndReviews()} /> }> 
 					<Text> </Text>
 					<View style={{flexDirection: 'row', justifyContent: 'center'}}>
 						

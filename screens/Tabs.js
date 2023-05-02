@@ -9,6 +9,7 @@ import HomeScreen from "./HomeScreen.js";
 import SearchScreen from "./SearchScreen";
 import CerealScreen from "./CerealScreen.js";
 import FavoritesScreen from "./FavoritesScreen";
+import LoginScreen from "./LoginScreen.js";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,11 @@ function SearchTab() {
 			<Stack.Screen
 				name="Cereal"
 				component={CerealScreen}
+				options={{headerShown: false}}
+			/>
+			<Stack.Screen
+				name="Login"
+				component={LoginScreen}
 				options={{headerShown: false}}
 			/>
 		</Stack.Navigator>

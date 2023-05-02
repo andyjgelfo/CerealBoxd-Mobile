@@ -51,6 +51,17 @@ const styles = StyleSheet.create({
 			height: 3
 		}
 	},
+	logoutButton: {
+		width: 50,
+		height: 50,
+		borderRadius: 25,
+		tintColor: 'white',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
+	},
 	inputBox: {
 		width: '90%',
 		backgroundColor: '#F2EAC1',

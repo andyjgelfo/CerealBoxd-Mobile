@@ -54,7 +54,7 @@ export default class CerealScreen extends Component {
 			star4Tint: 'white',
 			star5Tint: 'white',
 			addOrEdit: 'ADD',
-			smileyOrDelete: '😃',
+			smileyOrDelete: 'DELETE',
 			didYouAddStars: ''
 
 		}
@@ -78,7 +78,7 @@ export default class CerealScreen extends Component {
 
 		return (
 
-			
+
 
 
 			<View style={styles.container}>
@@ -94,7 +94,6 @@ export default class CerealScreen extends Component {
 					<View style={styles.profileBar}>
 						<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
 						<Text style={{ fontSize: 100 }}> </Text>
-						<View style={styles.profileLogo} />
 					</View>
 
 					<ScrollView nestedScrollEnabled={true}>
@@ -139,7 +138,7 @@ export default class CerealScreen extends Component {
 
 								{/*Like*/}
 								<TouchableOpacity onPress={this.handleFavoriteCereal}>
-									<Image style={styles.Like} {...{ tintColor: this.state.heartTint }} source={require("../assets/Heart.png")}  onLoad={() => {this.handleCheckBeforeLoad()}} />
+									<Image style={styles.Like} {...{ tintColor: this.state.heartTint }} source={require("../assets/Heart.png")} onLoad={() => { this.handleCheckBeforeLoad() }} />
 								</TouchableOpacity>
 
 								{/*Review*/}
@@ -202,7 +201,7 @@ export default class CerealScreen extends Component {
 							</View>
 
 
-							
+
 
 
 
@@ -248,11 +247,11 @@ export default class CerealScreen extends Component {
 										</TouchableOpacity>
 									</View>
 
-									
+
 
 									<Text>&nbsp;</Text>
 
-									<Text style={{color: 'red', textAlign: 'center'}}>{this.state.didYouAddStars}</Text>
+									<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.didYouAddStars}</Text>
 
 									<Text>&nbsp;</Text>
 
@@ -271,33 +270,34 @@ export default class CerealScreen extends Component {
 						</View>
 
 						<Text> &nbsp; </Text>
-							<Text> &nbsp; </Text>
-							<Text> &nbsp; </Text>
+						<Text> &nbsp; </Text>
+						<Text> &nbsp; </Text>
 
 
-
+						<View style={{alignItems: 'center'}}>
 							<View style={styles.favBar}>
 								<Text style={styles.barText}>Reviews</Text>
 							</View>
 							<Text>&nbsp;</Text>
+						</View>
 
-							<ScrollView nestedScrollEnabled={true} style={{ flexDirection: 'column', height: 35, backgroundColor: '#1C2143', borderColor: '#F2EAC1', borderWidth: 3, borderRadius: 10, height: 500 }}>
-								{/*Box for Reviews*/}
-								<View style={{ justifyContent: 'center', width: 350, height: 'auto' }} >
-									{/*Reviews*/}
-									<Text>&nbsp;</Text>
-									{global.cerealReviews.results.map((review) => {
-										return (
-											<View>
-												<Text style={{ fontSize: 25, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>{review.rating}/5</Text>
-												<Text style={{ fontSize: 20, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>"{review.body}" - @{review.reviewerName}</Text>
-												<Text>&nbsp;</Text>
-												<Text>&nbsp;</Text>
-											</View>
-										);
-									})}
-								</View>
-							</ScrollView>
+						<ScrollView nestedScrollEnabled={true} style={{ flexDirection: 'column', height: 35, backgroundColor: '#1C2143', borderColor: '#F2EAC1', borderWidth: 3, borderRadius: 10, height: 500 }}>
+							{/*Box for Reviews*/}
+							<View style={{ justifyContent: 'center', width: 350, height: 'auto' }} >
+								{/*Reviews*/}
+								<Text>&nbsp;</Text>
+								{global.cerealReviews.results.map((review) => {
+									return (
+										<View>
+											<Text style={{ fontSize: 25, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>{review.rating}/5</Text>
+											<Text style={{ fontSize: 20, textAlign: 'left', fontFamily: 'SemiBold15', width: 300, color: 'white', marginLeft: 10 }}>"{review.body}" - @{review.reviewerName}</Text>
+											<Text>&nbsp;</Text>
+											<Text>&nbsp;</Text>
+										</View>
+									);
+								})}
+							</View>
+						</ScrollView>
 
 
 
@@ -406,13 +406,11 @@ export default class CerealScreen extends Component {
 				yourReviewText = results.body;
 
 				//Define the placeholder for the textbox based on if there was a written review
-				if(results.body != "")
-				{
+				if (results.body != "") {
 					yourReviewPlaceholder = results.body;
 				}
-				else
-				{
-					yourReviewPlaceholder = "Edit Review! (Add a written portion)";
+				else {
+					yourReviewPlaceholder = "Edit Review!";
 				}
 
 				//Change the review buttons to their edit/del versions
@@ -514,7 +512,7 @@ export default class CerealScreen extends Component {
 	handleGetReviews = async () => {
 
 
-		this.setState({didYouAddStars: ""});
+		this.setState({ didYouAddStars: "" });
 
 
 		//Object var
@@ -637,6 +635,10 @@ export default class CerealScreen extends Component {
 		this.props.navigation.navigate('Review');
 	}
 
+	goToLogin = async () => {
+		this.props.navigation.navigate('Login');
+	}
+
 	tapHeart = async () => {
 
 
@@ -723,17 +725,14 @@ export default class CerealScreen extends Component {
 
 
 		//If the user hasn't added a review yet - ADD
-		if(this.state.addOrEdit == "ADD")
-		{
+		if (this.state.addOrEdit == "ADD") {
 
 			//Check to ensure that the user added a numeric rating before reviewing
-			if(reviewRating <= 0)
-			{
+			if (reviewRating <= 0) {
 				//Give a message and break
-				this.setState({didYouAddStars: "You forgot to leave a rating above!"});
+				this.setState({ didYouAddStars: "You forgot to leave a rating above!" });
 			}
-			else
-			{
+			else {
 
 				try {
 					var obj = {
@@ -743,7 +742,7 @@ export default class CerealScreen extends Component {
 						body: yourReviewText
 					};
 					var js = JSON.stringify(obj);
-					
+
 					const response = await fetch('https://cerealboxd.herokuapp.com/api/addReview', {
 						method: 'POST',
 						body: js,
@@ -751,32 +750,32 @@ export default class CerealScreen extends Component {
 							'Content-Type': 'application/json'
 						}
 					});
-					
+
 					var res = JSON.parse(await response.text());
-	
-					
-				
+
+
+
 					//Now that we've added a review, change addOrEdit to EDIT, and placehold the review box with the prev review
 					addOrEdit = "EDIT";
 					yourReviewPlaceholder = yourReviewText;
 					smileyOrDelete = "DELETE"
-	
+
+
 					//This will refresh the reviews! Yippee!!
 					//RNRestart.Restart();
 					this.handleCheckBeforeLoad();
-					
-	
-					
+
+
+
 				}
-				catch(e) {
-					this.setState({message: e.message});
+				catch (e) {
+					this.setState({ message: e.message });
 				}
 
 			}
 
 		}
-		else if(this.state.addOrEdit == "EDIT")
-		{
+		else if (this.state.addOrEdit == "EDIT") {
 			try {
 				var obj = {
 					reviewerID: global.userId,
@@ -785,7 +784,7 @@ export default class CerealScreen extends Component {
 					body: yourReviewText
 				};
 				var js = JSON.stringify(obj);
-				
+
 				const response = await fetch('https://cerealboxd.herokuapp.com/api/editReview', {
 					method: 'POST',
 					body: js,
@@ -793,7 +792,7 @@ export default class CerealScreen extends Component {
 						'Content-Type': 'application/json'
 					}
 				});
-				
+
 				var res = JSON.parse(await response.text());
 
 				yourReviewPlaceholder = yourReviewText;
@@ -802,29 +801,28 @@ export default class CerealScreen extends Component {
 				//RNRestart.Restart();
 				this.handleCheckBeforeLoad();
 			}
-			catch(e) {
-				this.setState({message: e.message});
+			catch (e) {
+				this.setState({ message: e.message });
 			}
 		}
-		
+
 	}
 
 
 	handleSmileyDeleteClick = async () => {
 
-		
+
 		//  const {reviewerID, cerealID, rating, body} = req.body;
 
 		//If the user hasn't added a review yet - ADD
-		if(this.state.smileyOrDelete == "DELETE")
-		{
+		if (this.state.addOrEdit == "EDIT") {
 			try {
 				var obj = {
 					reviewerID: global.userId,
 					cerealID: global.cereal._id,
 				};
 				var js = JSON.stringify(obj);
-				
+
 				const response = await fetch('https://cerealboxd.herokuapp.com/api/deleteReview', {
 					method: 'POST',
 					body: js,
@@ -832,33 +830,31 @@ export default class CerealScreen extends Component {
 						'Content-Type': 'application/json'
 					}
 				});
-				
+
 				var res = JSON.parse(await response.text());
 
 				//Now that we've added a review, change addOrEdit to EDIT, and placehold the review box with the prev review
-				this.setState({addOrEdit: 'ADD'});
-				this.setState({smileyOrDelete: '😃'});
+				this.setState({ addOrEdit: 'ADD' });
 				yourReviewPlaceholder = "Write a Review!";
 
 				//This will refresh the reviews! Yippee!!
 				//RNRestart. Restart();
 				this.handleCheckBeforeLoad();
 			}
-			catch(e) {
-				this.setState({smileyOrDelete: e.message});
+			catch (e) {
+				this.setState({ smileyOrDelete: e.message });
 			}
 		}
-		else
-		{
-			
+		else {
+			this.setState({didYouAddStars: "You can't delete a review you haven't written!"})
 		}
-		
-	} 
+
+	}
 
 
 	handleCheckBeforeLoad = async () => {
 
-
+		yourReviewText = "";
 
 		this.handleCheckRating();
 		this.handleCheckFavorite();

@@ -168,11 +168,16 @@ const styles = StyleSheet.create({
 		top: 20,
 		alignItems: 'center'
 	},
-	profileLogo: {
-		backgroundColor: '#7F7F7F',
+	logoutButton: {
 		width: 50,
 		height: 50,
-		borderRadius: 25
+		borderRadius: 25,
+		tintColor: 'white',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
 	},
 	tabBar: {
 		bottom: 0,

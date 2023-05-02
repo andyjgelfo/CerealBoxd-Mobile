@@ -31,6 +31,11 @@ export default class SearchScreen extends Component {
 		}
 	}
 
+	componentDidMount()
+	{
+		this.changeSearchHandler("");
+	}
+
 	render() {
 		this.handleSearch();
 		return (
@@ -39,9 +44,7 @@ export default class SearchScreen extends Component {
 				<View style={styles.profileBar}>
 					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
 					<Text style={{fontSize:100}}> </Text>
-					<View style={styles.profileLogo}>
-						{/* <Button title='' onPress={this.props.navigation.navigate('Login')} /> */}
-					</View>
+					
 				</View>
 				<TextInput
 					style={styles.searchBar}
