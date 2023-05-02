@@ -123,6 +123,23 @@ const styles = StyleSheet.create({
 			height: 3
 		},
 	},
+	reviewBox: {
+
+		flexDirection: 'column',
+		backgroundColor: "#1C2143",
+		borderColor: "#F2EAC1",
+		borderWidth: 3,
+		borderRadius: 10,
+		width: '95%',
+		//height: 'auto',
+		alignItems: 'center',
+		borderRadius: 20,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
+	},
 	topCerealsBox: {
 		width: 300,
 		height: 300,
@@ -151,30 +168,36 @@ const styles = StyleSheet.create({
 		top: 20,
 		alignItems: 'center'
 	},
-	profileLogo: {
-		backgroundColor: '#7F7F7F',
+	logoutButton: {
 		width: 50,
 		height: 50,
-		borderRadius: 25
+		borderRadius: 25,
+		tintColor: 'white',
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		}
 	},
 	tabBar: {
 		bottom: 0,
 		position: 'absolute'
 	},
 	textInput: {
-		height: 40,
-		width: 200,
+		height: 150,
+		width: 300,
 		fontSize: 20,
 		backgroundColor:'#FFF',
-		borderRadius: 20,
+		borderRadius: 10,
 		borderColor: '#1C2143',
-		borderWidth: 0.5,
+		borderWidth: 3,
 		textAlign: 'center',
 		shadowOpacity: 0.25,
 		shadowOffset: {
 			width: 0,
 			height: 3
-		}
+		},
+		alignSelf: 'center'
 	},
 	title: {
 		fontSize: 40,
@@ -230,6 +253,54 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 40,
 		resizeMode: 'contain'
+	},
+	favBar: {
+        width: '90%',
+        height: 40,
+        fontSize: 30,
+        fontFamily: 'SemiBold15',
+        backgroundColor: '#F2EAC1',
+        alignItems: 'center',
+        textAlign: 'center',
+        borderRadius: 20,
+        borderColor: '#1C2143',
+        borderWidth: 2,
+        shadowOpacity: 0.25,
+        shadowOffset: {
+            width: 0,
+            height: 3
+        }
+    },
+    barText: {
+        width: '90%',
+        height: 40,
+        fontSize: 30,
+        fontFamily: 'SemiBold15',
+        alignItems: 'center',
+        textAlign: 'center',
+		justifyContent: 'center',
+		alignContent: 'center',
+		verticalAlign: 'middle',
+		alignSelf: 'center'
+    },
+	appButtonContainer: {
+		width: 75,
+		height:35,
+		backgroundColor: '#1C2143',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 20,
+		shadowOpacity: 0.25,
+		shadowOffset: {
+			width: 0,
+			height: 3
+		},
+		alignSelf: 'center'
+	},
+	appButtonText: {
+		fontFamily: 'SemiBold15',
+		fontSize: 20,
+		color: '#FFF'
 	}
 })
 

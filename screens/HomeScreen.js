@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, Pressable, Icon} from 'react-native';
+import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, SafeAreaView, Pressable, Icon, TouchableOpacity} from 'react-native';
 import {createStackNavigator, createAppContainer, } from 'react-navigation';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from "../Styles/Home.js";
@@ -41,7 +41,7 @@ export default class HomeScreen extends Component {
 
 	render() {
 
-		this.handleTopCereals();
+		//this.handleTopCereals();
 
 		//If the fonts didn't load, ret null
 		if(!this.state.fontsLoaded) {
@@ -91,8 +91,8 @@ export default class HomeScreen extends Component {
 				<Text>&nbsp;</Text>
 
 
-					<View style={{flexDirection:'row'}}>
-						<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}}>Current Top 5 Rated Cereals</Text>
+					<View style={{flexDirection:'row'}} >
+						<Text style={{fontSize:25, textAlign: 'center', fontFamily: 'SemiBold20'}} >Current Top 5 Rated Cereals</Text>
 					</View>
 
 					<View style={{flexDirection:'row'}}>
@@ -113,9 +113,9 @@ export default class HomeScreen extends Component {
 					<Text style={{fontSize:20}}>{this.state.newCard}</Text>
 				</View>
 				<View style={styles.profileBar}>
-					<Image style={styles.logo} source={require("../assets/trimlogo.png")} />
+					<Image style={styles.logo} source={require("../assets/trimlogo.png")} onLoad={() => {this.handleTopCereals()}} />
 					<Text style={{fontSize:100}}> </Text>
-					<View style={styles.profileLogo} />
+					
 				</View>
 			</View>
 
@@ -187,7 +187,7 @@ export default class HomeScreen extends Component {
 
 	handleTopCereals = async () => {
 
-
+		//alert("gamer");
 		
 		var obj = {
 			"collection": "box",

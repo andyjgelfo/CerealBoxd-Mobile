@@ -9,6 +9,10 @@ import RegisterScreen from './screens/RegisterScreen';
 import Verification from './screens/Verification';
 import ForgotScreen from './screens/ForgotScreen';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 export default class App extends React.Component {
 	render() {
 		return <AppContainer />;
