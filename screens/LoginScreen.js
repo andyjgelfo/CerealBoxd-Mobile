@@ -11,6 +11,10 @@ global.email = '';
 global.id = -1;
 global.code;
 
+global.jsonSearch = {
+	results: []
+};
+
 let password = '';
 
 let customFonts = {
@@ -149,7 +153,7 @@ export default class Login extends Component {
 				global.id = decoded.id;
 
 				if (decoded.confirmed) {
-					this.setState({message: ' '});
+					await this.handleSearch();
 					this.props.navigation.navigate('Tabs');
 				}
 				else {
@@ -168,7 +172,30 @@ export default class Login extends Component {
 		catch(e) {
 			this.setState({message: e.message});
 		}
-	} 
+	}
+
+	handleSearch = async () => {
+		var obj = {
+			collection: "box",
+			column: "name",
+			target: ''
+		};
+		var js = JSON.stringify(obj);
+
+		try {
+			const response = await fetch('https://cerealboxd.herokuapp.com/api/search', {
+				method: 'POST',
+				body: js,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			global.jsonSearch = JSON.parse(await response.text());
+		}
+		catch(e) {
+		}
+	}
 	
 	changeLoginNameHandler = async (val) => {
 		global.loginName = val;

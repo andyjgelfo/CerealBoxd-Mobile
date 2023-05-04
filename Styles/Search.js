@@ -23,7 +23,12 @@ const styles = StyleSheet.create({
 		}
 	},
 	cerealImage: {
-		borderRadius: 8
+		borderRadius: 8,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'center',
+		width: 100,
+		height: 140,
 	},
 	container: {
 		backgroundColor:'#2C3440',

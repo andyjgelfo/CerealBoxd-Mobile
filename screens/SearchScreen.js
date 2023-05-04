@@ -1,8 +1,6 @@
-import React, {Component, useState} from 'react';
-import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, TouchableOpacity} from 'react-native';
+import React, {Component, useEffect, useState} from 'react';
+import {ActivityIndicator, Button, View, Text, TextInput, Image, ScrollView, TouchableOpacity, FlatList, SafeAreaView} from 'react-native';
 import styles from "../Styles/Search.js";
-import AOS from 'aos';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 let search = '';
 global.cereal = {
@@ -17,22 +15,18 @@ global.cereal = {
 	ingredients: ""
 }
 
-global.jsonSearch = {
-	results: []
-};
+let items = Array.apply(null, Array(global.jsonSearch.results.length)).map((v, i) => {
+  return {
+	id: i,
+	src: global.jsonSearch.results[i]? global.jsonSearch.results[i].image: 'l',
+	cereal: global.jsonSearch.results[i]
+  };
+});
 
 export default class SearchScreen extends Component {
 
-	constructor() {
-		super()
-		this.state = {
-			 searchCriteria: '\n ',
-			 newCard: '\n '
-		}
-	}
-
 	render() {
-		this.handleSearch();
+
 		return (
 			<View style={styles.container}>
 				<Image style={styles.background} source={require("../assets/background.png")} />
@@ -48,64 +42,31 @@ export default class SearchScreen extends Component {
 					placeholder="SEARCH"
 					onChangeText={(val) => {this.changeSearchHandler(val)}}
 				/>
-				<ScrollView style={{flexDirection: 'column'}}>
-					<Text> </Text>
-					<View style={{flexDirection: 'row', justifyContent: 'center'}}>
-						<View>
-							{global.jsonSearch.results.map(cereal => {
-								if (global.jsonSearch.results.indexOf(cereal) % 3 == 0)
-									return (
-									<View key={global.jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
-										<TouchableOpacity onPress={() => {this.handleClick(cereal)}}>
-											<Image
-												resizeMode='stretch'
-												style={styles.cerealImage}
-												source={{width: 100, height: 140, uri: cereal.image}}
-											/>
-										</TouchableOpacity>
-										<Text> </Text>
-									</View>
-									)
-							})}
-						</View>
-						<Text>      </Text>
-						<View>
-							{global.jsonSearch.results.map(cereal => {
-								if (global.jsonSearch.results.indexOf(cereal) % 3 == 1)
-									return (
-									<View key={global.jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
-										<TouchableOpacity onPress={() => {this.handleClick(cereal)}}>
-											<Image
-												resizeMode='stretch'
-												style={styles.cerealImage}
-												source={{width: 100, height: 140, uri: cereal.image}}
-											/>
-										</TouchableOpacity>
-										<Text> </Text>
-									</View>
-									)
-							})}
-						</View>
-						<Text>      </Text>
-						<View>
-							{global.jsonSearch.results.map(cereal => {
-								if (global.jsonSearch.results.indexOf(cereal) % 3 == 2)
-									return (
-									<View key={global.jsonSearch.results.indexOf(cereal)} style={styles.cerealColumn}>
-										<TouchableOpacity onPress={() => {this.handleClick(cereal)}}>
-											<Image
-												resizeMode='stretch'
-												style={styles.cerealImage}
-												source={{width: 100, height: 140, uri: cereal.image}}
-											/>
-										</TouchableOpacity>
-										<Text> </Text>
-									</View>
-									)
-							})}
-						</View>
-					</View>
-				</ScrollView>
+				<FlatList
+				  data={items}
+				  renderItem={({item}) => (
+					<TouchableOpacity
+					  onPress={() => this.handleClick(item.cereal)}
+					  style={{
+						flexDirection: 'column',
+						margin: 12,
+						shadowOpacity: 0.5,
+						shadowOffset: {
+							width: 0,
+							height: 3
+						}
+					  }}>
+					  <Image
+						resizeMode='stretch'
+						style={styles.cerealImage}
+						source={{uri: item.src}}
+					  />
+					</TouchableOpacity>
+				  )}
+				  //Setting the number of column
+				  numColumns={3}
+				  keyExtractor={(item, index) => index}
+				/>
 			</View>
 		)
 	}
@@ -133,16 +94,13 @@ export default class SearchScreen extends Component {
 			});
 
 			global.jsonSearch = JSON.parse(await response.text());
-
-			this.setState({searchCriteria: resultText});
 		}
 		catch(e) {
-			this.setState({searchCriteria: e.message});
 		}
 	}
 
 	changeSearchHandler = async (val) => {
 		search = val;
-		this.handleSearch();
+		await this.handleSearch();
 	}
 }
